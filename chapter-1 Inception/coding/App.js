@@ -58,3 +58,4 @@ root.render(parent);
 // this "heading" is the React Element
 // React element is nothing but a normal Javascript Object
 console.log(parent);
+console.log(parent);
