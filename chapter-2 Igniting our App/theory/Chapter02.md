@@ -119,5 +119,146 @@
         ```
         npm install
         ```
-14. 
+14. **Difference between npm and npx :**
+    + npx means executing a package 
+    + npm commands are different if you have to install a package you need to write `npm install` then you install a package 
 
+15. **What is the meaning of this command :**
+    ```
+    npx parcel index.html
+    ```
+    + `index.html` is a source file
+    + we are executing the parcel
+    + Basically, parcel goes to the source `index.html` and it generates a development build for our app and it hosts that development build to `localhost:1234`. So when it generates a development build it puts it up into the `dist` folder.  
+    + Simply, we use it for starting the server.
+
+16. **Why CDN is not a good way to use react?**
+
+    + If I will fetch from CDN it will make a network call to `unpkg.com`and get react but if I already have react in my node modules then why would I make a another network call. That's why we install it.
+    +  Today react version is 18 someother day it will be 19, 20 and so on. Now what will happen, we have to keep changing this `URL`. So it's better to have it inside our `package.json`. It is easier to manage all our dependencies and also react as one of the dependencies inside our npm `package.json`. 
+
+17. **how to install react and react-dom?**
+    ```
+    together install: 
+    ------------------
+    npm i react react-dom
+    "i stands for install"
+
+    separate install :
+    ---------------------
+    npm install react 
+    or 
+    npm install react-dom
+    ```
+
+18. **How do I use that react into my code after deleting the CDN links?**
+    + we will use keyword as `import` and importing the React & ReactDOM from react & react-dom/client respectively.
+    ```
+    import React from "react";
+    import ReactDOM from "react-dom/client"
+    ```  
+    + All are coming from node modules.  
+
+19. **Why getting this below error?**
+    > Browser scripts cannot have imports or exports.
+    + because browser understands this below script as regular js file :
+    ```
+        <script src="./App.js"></script>
+    ```
+    but when we add `type="module"` then browser react this script as a module not regular js file. 
+    ```
+        <script type="module" src="./App.js"></script>
+    ```
+20. **Hot Module Replacement (HMR):**
+    + It means that parcel will keep a track of all the files which you are updating.
+    + There is `File Watcher Algorithm` (written in C++). It keeps track of all the files which are changing realtime and it tells the server to reload.
+    + These are all done by PARCEL
+
+21. **Parcel-Cache folder:**
+    + Parcel caches code all the time.
+    + When we run the application, a build is created which takes some time in ms.
+    + If we make any code changes and save the application, anotherbuild will be triggered which might take even less time than the previous build.
+    + This reduction of time is due to parcel cache.
+    + Parcel immediately loads the code from the cache every time there is a subsequent build.
+    + On the very first build parcel creates a folder .parcelcache where it stores the caches in binary codeformat.
+    + Parcel gives faster build, faster developer experience because of caching.
+
+22. **Parcel features at a glance:**
+    + Hot Module Replacement (HMR)
+    + File Watcher Algorithm - C++
+    + Bundling
+    + Minify Code
+    + Cleaning our code
+    + Different Dev and production build
+    + Super fast build algorithm
+    + Image Optimization
+    + Caching while development
+    + Compression
+    + Compatible with older browser versions
+    + Https on dev
+    + Image Optimization
+    + Port No
+    + Error Handling
+    + Diagnostic
+    + Consistency Hashing Algorithm
+    + Zero Config
+    + Tree Shaking
+
+23. **Tree Shaking:**
+    + Tree shaking is a process of removing the unwanted code that we do not use while developing the application.
+    + In computing, tree shaking is a dead code elimination
+    technique that is applied when optimizing code. 
+
+24. **Remove this from Package.json :**
+    ```
+    "main": "App.js",
+    ```
+    + Because, We give the entry point like `index.html` while executing parcel. 
+    + So, Parcel can conflicts with `"main": "App.js"`
+     and will get error so remove  `"main": "App.js"`
+    + Also, `Package.json` is automatically generated it for us.
+
+25. **dist folder:**
+    + It keeps the files minified for us.
+    + When bundler builds the app, the build goes into a folder
+    called dist.
+    + The `/dist` folder contains the minimized and optimised
+    version the source code.
+    + Along with the minified code, the /dist folder also comprises of all the compiled modules that may or may not be used with other systems.
+
+    When we run command:
+    ```
+    npx parcel index.html
+    ```
+    + This will create a faster development version of our project and serves it on the server.
+
+    When I tell parcel to make a production build:
+    ```
+    npx parcel build index.html
+    ```
+    + It creates a lot of things, minify your file.
+    + And the parcel will build all the production files to
+    the dist folder.
+
+26. **Browserslist:**
+    + Browserslist is a tool that specifies which browsers should be supported/compatible in your frontend app.
+    + It makes our code compatible for a lot of browsers.
+    
+    In `package.json` file do:
+    ![alt text](browserslist.png)
+    
+27. **Why your app is fast?**
+    + because of react, bundlers and all other packages, all of are synced and makes react app fast. Not just react makes app fast.
+    + bundlers like parcel, it minifies, optimize, tree shaking, code split, bundling, image optimization & compressing etc to the codes then our app becomes fast.
+
+28. **What is `.gitignore`? What should we add and not add into it?**
+    + `.gitignore` is a file where we mention file or folder names which we do not want to upload on github.
+    + we can add :
+        + node_modules
+        + dist
+        + `.parcel-cache`
+    + we can't add :
+        + `package.json`
+        + `package-lock.json`    
+
+29. **What is difference between vite, parcel & webpack?**

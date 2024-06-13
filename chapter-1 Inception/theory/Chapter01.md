@@ -75,7 +75,9 @@ Example :
         files from different origin than the hosting web page. This
         allows the script to access resources from the server hosting
         the script, such as making HTTP requests or accessing data.
-+ **_2nd way :_** 
++ **_2nd way :_** Another way to get react into our app is via `NPM`. 
+    > This is recommended way.   
+
 4. __What is React?__
 
     + React is a Javascript Library.
