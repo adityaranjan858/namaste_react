@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 
 const heading = React.createElement("div", {  }, [
-  React.createElement("h2", { id: "heading" }, "This heading is representing by :"),
+  React.createElement("h2", { id: "heading" }, "This heading is represented by :"),
   React.createElement(
     "h2",
     { class: "heading" },
