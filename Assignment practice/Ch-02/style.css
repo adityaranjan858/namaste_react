@@ -1,7 +1,20 @@
 #root{
     color: burlywood;
 }
-
+.heading {
+    margin-top: 50px;
+    font-size: 50px;
+}
+#heading{
+    font-size: 25px;
+}
 body{
-    background-color: blueviolet;
+    background-color: rgb(47, 3, 88);
+    text-align: center;
+}
+.sub_heading, .items{
+    padding: 0;
+    list-style: none;
+    margin-top: 50px;
+    font-size: 30px;
 }
