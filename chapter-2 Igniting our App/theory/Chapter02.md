@@ -128,7 +128,7 @@
     npx parcel index.html
     ```
     + `index.html` is a source file
-    + we are executing the parcel
+    + npx means executing a npm package i.e `parcel`
     + Basically, parcel goes to the source `index.html` and it generates a development build for our app and it hosts that development build to `localhost:1234`. So when it generates a development build it puts it up into the `dist` folder.  
     + Simply, we use it for starting the server.
 

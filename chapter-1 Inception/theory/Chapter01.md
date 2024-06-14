@@ -83,6 +83,13 @@ Example :
     + React is a Javascript Library.
     + React comes with a philosophy of writing or manipulating the DOM using javascript or using React.
 
+5. **What is React Element?**
+    + DOM elements are HTML elements.
+    + So, just like we have DOM elements, in React, we have React elements which are kind of equivalent to DOM elements.
+    + React element is basically an `Object`.
+    + When we `render` this element onto DOM then it becomes HTML element.
+
+
 5. __What is :__
 
     ```
