@@ -44,13 +44,13 @@ Example :
     + __What are those 2 links?__
     + 1st file: this is the core file of React or This is the core React framework algorithm which is written inside it.
     
-        + React Development Js :-
+        + React Development Javascript :-
             ```
             <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
             ```
 
     + 2nd file: This is the React Library which is useful for DOM operations   
-        + React DOM Development Js :-
+        + React DOM Development Javascript :-
             ```
             <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
             ```
@@ -58,7 +58,7 @@ Example :
     + __Why do we need 2 links, can’t we use a single link?__
 
         + No, React does not only work on browsers, React also works on mobile phones as React Native. Also something called React 3d So, There are different types of React, types of places where React is used so there are different functions, methods which are being used inside React native or browsers or different places that is why there are two files.
-        + The main file react.development.js  is the core react thing and the other one is kind of like a bridge between these react and browsers So it’s like React DOM.   
+        + The main file `react.development.js`  is the core react thing and the other one is kind of like a bridge between these react and browsers So it’s like React DOM.   
     + **Why do we need crossorigin Attribute?**
         + If you serve React from a CDN, we recommend to keep the crossorigin attribute set.
     + **What is crossorigin attribute ?**        

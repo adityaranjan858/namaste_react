@@ -28,7 +28,7 @@
     ```
     + Once package installation is complete, their versions and
     configuration related information is stored as dependencies
-    inside package.json file
+    inside `package.json` file
 
 4. **Why do we need this Package.json file ?**
     > Sometimes this packages are also known as dependencies.
@@ -70,7 +70,11 @@
         * Normal dependencies are used in production.
 
 9. **Difference between tilde ( ~ ) and caret ( ^ ) in package.json**
-    + When we open our `package.json` file and search for the dependency property and in there we find the packages that are listed as a nested object of the dependency property `package-name:package-version`. Now look at the package version, we find some numbers separated by three dots. 
+    + When we open our `package.json` file and search for the dependency property and in there we find the packages that are listed as a nested object of the dependency property 
+        ```
+        package-name:package-version
+        ``` 
+    Now look at the package version, we find some numbers separated by three dots. 
 
     + NPM versions follow a three-number format, separated by dots. The leftmost number signifies the major release, the second one represents the minor release, and the third number denotes the patch release of the package.
 
@@ -134,7 +138,7 @@
 
 16. **Why CDN is not a good way to use react?**
 
-    + If I will fetch from CDN it will make a network call to `unpkg.com`and get react but if I already have react in my node modules then why would I make a another network call. That's why we install it.
+    + If I will fetch from CDN it will make a network call to `unpkg.com` and get react but if I already have react in my node modules then why would I make a another network call. That's why we install it.
     +  Today react version is 18 someother day it will be 19, 20 and so on. Now what will happen, we have to keep changing this `URL`. So it's better to have it inside our `package.json`. It is easier to manage all our dependencies and also react as one of the dependencies inside our npm `package.json`. 
 
 17. **how to install react and react-dom?**
@@ -161,11 +165,11 @@
 
 19. **Why getting this below error?**
     > Browser scripts cannot have imports or exports.
-    + because browser understands this below script as regular js file :
+    + because browser understands this below script as a regular javascript file :
     ```
         <script src="./App.js"></script>
     ```
-    but when we add `type="module"` then browser react this script as a module not regular js file. 
+    but when we add `type="module"` then browser react this script as a module not regular javascript file. 
     ```
         <script type="module" src="./App.js"></script>
     ```
