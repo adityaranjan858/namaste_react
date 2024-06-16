@@ -1,4 +1,4 @@
-# Ignited My App
+# Laying The Foundation
 To access this assignment :
 + Download the files
 + install npm using 
@@ -11,4 +11,4 @@ To access this assignment :
     ```
 ## See my assignment work -
 
-![alt text](<Ch-02 Assignment.png>)
+![alt text](<Ch-03 Assignment.png>)
