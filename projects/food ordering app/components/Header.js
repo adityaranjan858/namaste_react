@@ -1,13 +1,15 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
+import $ from "jquery";
+import Popper from "popper.js";
 import Logo from "../media/logo.png";
 import icon from "../media/user_icon.png";
 
 const Header = () => {
   return (
     <>
-      <nav class="navbar navbar-expand-lg navbar-light ">
+      <nav class="navbar navbar-expand-lg navbar-dark ">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">
             <img className="logo" src={Logo} alt="Loading..." />
@@ -21,7 +23,7 @@ const Header = () => {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon "></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">

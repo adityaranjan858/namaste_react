@@ -1,4 +1,4 @@
-# Laying The Foundation
+# Talk is Cheap, Show me the code
 To access this assignment :
 + Download the files
 + install npm using 
@@ -11,4 +11,4 @@ To access this assignment :
     ```
 ## See my assignment work -
 
-![alt text](<Ch-03 Assignment.png>)
+![alt text](<media/assignment 04.png>)
