@@ -266,3 +266,12 @@
         + `package-lock.json`    
 
 29. **What is difference between vite, parcel & webpack?**
+    
+    +  When it comes to choosing the best bundler for your project, there are several factors to consider. 
+        + Vite is a newer bundler that is gaining popularity for its speed, especially in development. 
+        
+        + Parcel, on the other hand, is a more traditional bundler that offers a range of features and customization options. 
+        
+        + Finally, Webpack is a more feature-rich bundler that is well-suited for large projects with complex dependencies. 
+        
+    + Ultimately, the best choice will depend on the specific needs of your project. It may be helpful to try out all three and see which one works best for you.
