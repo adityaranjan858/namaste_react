@@ -1,4 +1,5 @@
 import React from "react";
+import { RES_IMG_CDN } from "../utils/constants";
 
 const RestroCard = (props) => {
   // using props
@@ -22,10 +23,7 @@ const RestroCard = (props) => {
     <>
       <div class="card my-3 h-100 lh-base">
         <img
-          src={
-            "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,h_600/" +
-            cloudinaryImageId
-          }
+          src={RES_IMG_CDN + cloudinaryImageId}
           class="card-img-top"
           alt="res-logo"
         />

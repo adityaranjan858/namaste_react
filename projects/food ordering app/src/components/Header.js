@@ -3,8 +3,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import $ from "jquery";
 import Popper from "popper.js";
-import Logo from "../media/logo.png";
-import icon from "../media/user_icon.png";
+import Logo from "../../media/logo.png";
+import icon from "../../media/user_icon.png";
 
 const Header = () => {
   return (
