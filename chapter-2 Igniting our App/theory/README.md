@@ -269,9 +269,93 @@
     
     +  When it comes to choosing the best bundler for your project, there are several factors to consider. 
         + Vite is a newer bundler that is gaining popularity for its speed, especially in development. 
+            + Vite improves the dev server start time by first dividing the modules in an application into two categories: dependencies and source code.
+                + **Dependencies** are mostly plain JavaScript that do not change often during development.
+                > Vite pre-bundles dependencies using esbuild. esbuild is written in Go and pre-bundles dependencies 10-100x faster than JavaScript-based bundlers.
+                + **Source code** often contains non-plain JavaScript that needs transforming (e.g. JSX, CSS or Vue/Svelte components), and will be edited very often. Also, not all source code needs to be loaded at the same time (e.g. with route-based code-splitting).
+            + A dev server that provides rich feature enhancements over native ES modules, for example extremely fast Hot Module Replacement (HMR).
+
+            + A build command that bundles your code with Rollup, pre-configured to output highly optimized static assets for production.
         
         + Parcel, on the other hand, is a more traditional bundler that offers a range of features and customization options. 
         
         + Finally, Webpack is a more feature-rich bundler that is well-suited for large projects with complex dependencies. 
         
     + Ultimately, the best choice will depend on the specific needs of your project. It may be helpful to try out all three and see which one works best for you.
+
+30. **The full process to create a project with `Vite`, Code step by step`**  
+
+    Certainly! Here's a step-by-step process for using `npm i create-vite` to install the `create-vite` package, which is a command-line interface for creating Vite projects:
+
+    Step 1: Open your terminal or command prompt.
+
+    Step 2: Run the following command to install the `create-vite` package globally using npm:
+
+    ```bash
+    npm install -g create-vite
+    ```
+
+    Step 3: Once the installation is complete, you can use the `create-vite` command to create a new Vite project. For example, to create a new Vite project named "my-vite-app", you can run the following command:
+
+    ```bash
+    create-vite my-vite-app
+    ```
+
+    Step 4: After running the command, it will prompt you to select a template (e.g., vanilla, vue, react, preact, etc.) and other options for your Vite project.
+
+    Step 5: Once you've made your selections, `create-vite` will set up a new Vite project for you with the chosen template and configurations.
+
+    That's it! You've now used `npm i create-vite` to install the `create-vite` package and created a new Vite project using the command-line interface.  
+
+31. **The full process to create a project with `Pracel`, Code step by step** 
+
+    Sure, the equivalent process for creating a new project using Parcel is a bit different. Parcel does not have a dedicated package like `create-vite` for creating projects. Instead, you can use the Parcel bundler directly to create a new project.
+
+    Here's a step-by-step guide for creating a new project using Parcel:
+
+    Step 1: Open your terminal or command prompt.
+
+    Step 2: Create a new directory for your project and navigate into it:
+
+    ```bash
+    mkdir my-parcel-app
+    cd my-parcel-app
+    ```
+
+    Step 3: Initialize a new Node.js project in the directory:
+
+    ```bash
+    npm init -y
+    ```
+
+    Step 4: Install Parcel as a development dependency in your project:
+
+    ```bash
+    npm install --save-dev parcel-bundler
+    ```
+
+    Step 5: Create an HTML file (e.g., index.html) and an entry JavaScript file (e.g., index.js) in your project directory.
+
+    Step 6: In the entry JavaScript file (index.js), write some code to start your application.
+
+    Step 7: In the HTML file (index.html), include the entry JavaScript file using a script tag.
+
+    Step 8: Open your package.json file and add a start script:
+
+    ```json
+    "scripts": {
+    "start": "parcel index.html"
+    }
+    ```
+
+    Step 9: Save the package.json file.
+
+    Step 10: Now, you can start the development server by running the following command:
+
+    ```bash
+    npm start
+    ```
+
+    Parcel will build your project and start a development server. You can then access your project in a web browser at the specified address.
+
+    That's it! You've now created a new project using Parcel and started a development server to work on your project.  
