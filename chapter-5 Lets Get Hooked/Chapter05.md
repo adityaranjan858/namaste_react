@@ -144,7 +144,7 @@ scenario effectively.
 the industry follows.
 **Never ever keep Hard-coded data in  the component files.**
 
-1. where should we keep the hard-coded files ?
+1. **where should we keep the hard-coded files ?**
     + Created a new folder within the `'src'` folder called `'utils'`
         > (Utils means common utilities that can we use  across all our app & some people named it as "common", "config" etc. but follow industry standard.)
         
@@ -244,11 +244,12 @@ UI(display screen) ?
 ## Introducing React-Hooks
 1. **What is Hook ?**
 
-    + It's simply a regular JavaScript function.
-    + Which is a Utility functions.
-    + it gives utility function such as `useState()`, `useEffect()` etc.
-    + However, it becomes powerful when used within React, as it's provided to us by React itself. These pre-built functions have underlying logic developed by React developers. When we install React via npm, we gain access to these superpowers.
-
+    +  Hooks in React, are just JavaScript functions provided by React that act as utility functions. 
+    + They allow functional components to manage state and utilize other React features. 
+    + These hooks, like `useState()` and `useEffect()`, are powerful tools that are pre-built function in React. 
+    + When we install React using npm, we gain access to these pre-built functions that have been carefully crafted by the React core team. 
+    + It's crucial to follow guidelines when using hooks, such as calling them at the top level of functional components and avoiding nesting them within loops or conditions.  
+    
         or
 
         Two crucial hooks we frequently utilize are:
@@ -259,6 +260,14 @@ UI(display screen) ?
         ```
 
 2. **`useState()`**
+
+    > Below definition is for interview:
+
+        + `useState()` is a hook provided by React that allows functional components to manage state. State is essentially the data that a component needs to keep track of and render.
+        
+        + When you call the `useState()` hook within a functional component, it returns an array with two values: 
+        
+        + The first value represents the current state value, and the second value is a function to update that state.
 
     + First, we have to import as a named import from ‘react’.
     + We are using  `useState()`  inside the body component to create a `state variable`. 
