@@ -1,25 +1,68 @@
-import React from "react";
+import React, { useState } from "react";
 import RestroCard from "./RestroCard";
 import { resList } from "../utils/mockData";
 
 const Body = () => {
+  // Refactor the onClick of top restaurant button
+
+  // filterTopRes = () => {
+  //   const topRes = resList.filter((res) => res.info.avgRating > 4.2);
+  //   console.log(topRes);
+  // };
+
+  // copying the original data from "resList" to listOfRestaurants, also using "let " because we can modify the data.
+  // let listOfRestaurants = resList;
+
+  const [restaurantsList, setRestaurantsList] = useState(resList);
+
+  // we can also write useState() as different way :
+  // it is just an destructuring
+  // const arr = useState(resList);
+
+  // first way
+  // const [restaurantsList, setRestaurantsList] = arr;
+
+  // second way
+  // const restaurantsList = arr[0];
+  // const setRestaurantsList = arr[1];
+
   return (
     <div className="app_body ">
-      {/* Search Bar */}
-      <form class="d-flex searchBar my-3 mx-auto">
-        <input
-          class="form-control me-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-        <button class="btn btn-outline-warning" type="submit">
-          Search
-        </button>
-      </form>
-
       {/* Restaurant Card */}
       <div className="container res-container my-5">
+        <div className="d-flex flex-wrap  justify-content-between flex-column flex-md-row align-items-center">
+          <div className="">
+            {/* Top Restaurant Button */}
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => {
+                const filteredList = resList.filter(
+                  (res) => res.info.avgRating > 4.2
+                );
+                // console.log(filteredList)
+                setRestaurantsList(filteredList);
+              }}
+            >
+              Top Rated Restaurant
+            </button>
+          </div>
+
+          <div>
+            {/* Search Bar */}
+            <form className="d-flex searchBar my-3 mx-auto">
+              <input
+                className="form-control me-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+              />
+              <button className="btn btn-outline-warning" type="submit">
+                Search
+              </button>
+            </form>
+          </div>
+        </div>
         <div className="row res-card row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
           {/* Using props */}
           {/* <div className="col-md-3">
@@ -36,7 +79,7 @@ const Body = () => {
           </div> */}
 
           {/* Using Live data */}
-          {resList.map((restaurant) => (
+          {restaurantsList.map((restaurant) => (
             <div className="col">
               <RestroCard key={restaurant.id} resDataList={restaurant} />
             </div>

@@ -35,15 +35,7 @@ body{
     color: white;
 }
 
-.searchBar{
-    width: 50%;
-}
 .fa-circle{
     font-size: 5px;
 }
 
-@media (max-width: 767.98px) { 
-    .searchBar{
-        width: 100%;
-    }
- }
