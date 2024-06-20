@@ -21,20 +21,21 @@ const RestroCard = (props) => {
 
   return (
     <>
-      <div class="card my-3 h-100 lh-base">
+      <div className="card my-3 h-100 lh-base">
         <img
           src={RES_IMG_CDN + cloudinaryImageId}
-          class="card-img-top"
+          className="card-img-top"
           alt="res-logo"
         />
-        <div class="card-body">
-          <h4 class="card-title">{name}</h4>
-          <h5 class="card-subtitle mb-2 fw-normal">
-            <i class="fa-solid fa-star"></i>
-            {avgRatingString} <i class="fa-solid fa-circle"></i> {sla.slaString}
+        <div className="card-body">
+          <h4 className="card-title">{name}</h4>
+          <h5 className="card-subtitle mb-2 fw-normal">
+            <i className="fa-solid fa-star"></i>
+            {avgRatingString} <i className="fa-solid fa-circle"></i>{" "}
+            {sla.slaString}
           </h5>
-          <h6 class="card-subtitle mb-2 fw-light">{cuisines.join(",")}</h6>
-          <h6 class="card-subtitle mb-2 fw-normal pt-1">{costForTwo}</h6>
+          <h6 className="card-subtitle mb-2 fw-light">{cuisines.join(",")}</h6>
+          <h6 className="card-subtitle mb-2 fw-normal pt-1">{costForTwo}</h6>
         </div>
       </div>
     </>

@@ -14,6 +14,20 @@ const Body = () => {
   // let listOfRestaurants = resList;
 
   const [restaurantsList, setRestaurantsList] = useState(resList);
+  const [searchInp, setSearchInp] = useState("");
+
+  // search Input handler
+  const searchInpHandler = (event) => {
+    setSearchInp(event.target.value);
+  };
+
+  const submnitHandler = (event) => {
+    event.preventDefault();
+    const filteredList = resList.filter((res) =>
+      res.info.name.toLowerCase().includes(searchInp.toLowerCase())
+    );
+    setRestaurantsList(filteredList);
+  };
 
   // we can also write useState() as different way :
   // it is just an destructuring
@@ -50,12 +64,18 @@ const Body = () => {
 
           <div>
             {/* Search Bar */}
-            <form className="d-flex searchBar my-3 mx-auto">
+            <form
+              className="d-flex searchBar my-3 mx-auto"
+              onSubmit={submnitHandler}
+            >
               <input
                 className="form-control me-2"
                 type="search"
-                placeholder="Search"
+                placeholder="Search By Name"
                 aria-label="Search"
+                name="search"
+                value={searchInp}
+                onChange={searchInpHandler}
               />
               <button className="btn btn-outline-warning" type="submit">
                 Search
