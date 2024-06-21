@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import RestroCard from "./RestroCard";
 import { resList } from "../utils/mockData";
 
 const Body = () => {
+  // ***************************************
   // Refactor the onClick of top restaurant button
 
   // filterTopRes = () => {
@@ -10,10 +11,29 @@ const Body = () => {
   //   console.log(topRes);
   // };
 
+  // ***************************************
   // copying the original data from "resList" to listOfRestaurants, also using "let " because we can modify the data.
   // let listOfRestaurants = resList;
 
-  const [restaurantsList, setRestaurantsList] = useState(resList);
+  // ****************************************
+  // we can also write useState() as different way :
+  // it is just an destructuring
+  // const arr = useState(resList);
+
+  // first way
+  // const [restaurantsList, setRestaurantsList] = arr;
+
+  // second way
+  // const restaurantsList = arr[0];
+  // const setRestaurantsList = arr[1];
+
+  // ****************************************
+  // Below one was using mockdata
+  // const [restaurantsList, setRestaurantsList] = useState(resList);
+
+  // *******************************************
+  // using live data and this array of objects so used empty array.
+  const [restaurantsList, setRestaurantsList] = useState([]);
   const [searchInp, setSearchInp] = useState("");
 
   // search Input handler
@@ -29,16 +49,21 @@ const Body = () => {
     setRestaurantsList(filteredList);
   };
 
-  // we can also write useState() as different way :
-  // it is just an destructuring
-  // const arr = useState(resList);
+  // here once the body component would have been rendered , we will fetch the data
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  // first way
-  // const [restaurantsList, setRestaurantsList] = arr;
-
-  // second way
-  // const restaurantsList = arr[0];
-  // const setRestaurantsList = arr[1];
+  const fetchData = async () => {
+    const data = await fetch(
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9352403&lng=77.624532&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+    );
+    const json = await data.json();
+    setRestaurantsList(
+      //! Always use Optional Chaining (?.)
+      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
+  };
 
   return (
     <div className="app_body ">
