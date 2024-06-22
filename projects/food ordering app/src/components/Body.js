@@ -34,19 +34,22 @@ const Body = () => {
   // *******************************************
   // using live data and this array of objects so used empty array.
   const [restaurantsList, setRestaurantsList] = useState([]);
-  const [searchInp, setSearchInp] = useState("");
+  const [searchText, setSearchText] = useState("");
+  const [filteredRestaurantsList, setFilteredRestaurantsList] = useState([]);
 
   // search Input handler
   const searchInpHandler = (event) => {
-    setSearchInp(event.target.value);
+    setSearchText(event.target.value);
   };
 
   const submnitHandler = (event) => {
     event.preventDefault();
-    const filteredList = resList.filter((res) =>
-      res.info.name.toLowerCase().includes(searchInp.toLowerCase())
+    // never ever change the main list, so we can filter from there, like below, and use filteredList for map function.
+    const filteredList = restaurantsList.filter((res) =>
+      res.info.name.toLowerCase().includes(searchText.toLowerCase())
     );
-    setRestaurantsList(filteredList);
+    console.log(filteredList);
+    setFilteredRestaurantsList(filteredList);
   };
 
   // here once the body component would have been rendered , we will fetch the data
@@ -59,13 +62,31 @@ const Body = () => {
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9352403&lng=77.624532&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     );
     const json = await data.json();
+    // ! update both the list, one for main list and second for using as filter
+
+    // * main list for filter and all
     setRestaurantsList(
       //! Always use Optional Chaining (?.)
       json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
+
+    // * using for show the data
+    setFilteredRestaurantsList(
+      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
   };
 
-  return (
+  // **************************************
+  // * conditional rendering using if/else
+  // if (restaurantsList.length === 0) {
+  //   return <h1 className="text-white text-center my-5">Loading.....</h1>;
+  // }
+
+  // **************************************
+  // * conditional rendering using ternery operator
+  return restaurantsList.length === 0 ? (
+    <h1 className="text-white text-center my-5">Loading.....</h1>
+  ) : (
     <div className="app_body ">
       {/* Restaurant Card */}
       <div className="container res-container my-5">
@@ -76,7 +97,7 @@ const Body = () => {
               type="button"
               className="btn btn-primary"
               onClick={() => {
-                const filteredList = resList.filter(
+                const filteredList = restaurantsList.filter(
                   (res) => res.info.avgRating > 4.2
                 );
                 // console.log(filteredList)
@@ -99,7 +120,7 @@ const Body = () => {
                 placeholder="Search By Name"
                 aria-label="Search"
                 name="search"
-                value={searchInp}
+                value={searchText}
                 onChange={searchInpHandler}
               />
               <button className="btn btn-outline-warning" type="submit">
@@ -124,11 +145,19 @@ const Body = () => {
           </div> */}
 
           {/* Using Live data */}
-          {restaurantsList.map((restaurant) => (
-            <div className="col">
-              <RestroCard key={restaurant.id} resDataList={restaurant} />
-            </div>
-          ))}
+          {filteredRestaurantsList.length > 0 ? (
+            filteredRestaurantsList.map((restaurant) => (
+              <div className="col">
+                <RestroCard key={restaurant.id} resDataList={restaurant} />
+              </div>
+            ))
+          ) : (
+            <h2 className="w-100 my-5 text-white text-center">
+              {filteredRestaurantsList.length === 0
+                ? "Sorry, no restaurants found. Please try a different search."
+                : ""}
+            </h2>
+          )}
         </div>
       </div>
     </div>

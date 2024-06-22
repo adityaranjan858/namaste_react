@@ -238,3 +238,301 @@ https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Basic_concepts
     > Below images are just for reference.
     + ![alt text](image-2.png)
     + ![alt text](image-3.png)
+
+
+## Part - 2
+
+After fetching the data, there's a noticeable one-second delay before it appears on the screen. This delay occurs because the APIs take some time to load. 
+
+Improving this can enhance the user experience.
+
+1. **How could we improve it?**
+
+    + To enhance the user experience, we could add a `spinning loader` that appears while we wait for the data to load from the APIs. This provides visual feedback to the user and indicates that the application is working to retrieve the information.
+    + We could implement a condition to display a `spinning loader` if our list of restaurants hasn't received any data yet.
+        ```
+        if (listOfRestaurant.length === 0) {
+            return <h1>loading. . .</h1>;
+        }
+        ```
+    + Refreshing the page to see the result,but this isn't an ideal approach. Instead, we can enhance the user experience by implementing a `‘Shimmer UI’`.
+
+    **Shimmer UI**
+
+    + Shimmer UI is a technique that shows placeholder content while data is loading, reducing wait time and keeping users engaged. 
+    + Also known as `Fake Cards`.
+
+    + Instead of displaying a generic `"loading"` message, we'll integrate a  `<shimmer/>` component within our app to provide visual feedback while data is loading. this 
+    concept is known as `conditional rendering`.
+        ```
+        // conditional rendering
+        if (listOfRestaurant.length === 0) {
+            return <Shimmer/>;
+        }
+        ```
+    **Conditional rendering**
+    
+    + Rendering on the basis of specific conditions is known as `Conditional rendering`.
+
+    + In React, conditional rendering can be achieved using JavaScript expressions within JSX. Here's a simple example:
+
+    ```jsx
+    import React from 'react';
+
+    function App() {
+    const isLoggedIn = true;
+
+    return (
+        <div>
+        {isLoggedIn ? <p>Welcome, User!</p> : <p>Please log in to continue.</p>}
+        </div>
+    );
+    }
+
+    export default App;
+    ```
+
+    + In this example, the `<p>` element will only be rendered if the `isLoggedIn` variable is `true`. If `isLoggedIn` is `false`, a different message will be displayed.
+
+    + Conditional rendering can also be used to render different components based on conditions, handle loading states, or display error messages. By using conditional rendering effectively, you can create dynamic and interactive web applications that respond appropriately to different scenarios.  
+
+    + **It has 4 different approaches :**
+
+    + `If /else:` 
+    
+    + `Element variables:` In this, we use Js variables to store elements. It will also help to conditionally render the entire component or only a part of the component as well.
+    ```
+    let message;
+        if (this.state.isLoggedIn) {
+            message = <div>Welcome Aditya to conditional rendering through element variable</div>
+        } else {
+            message = <div>Welcome Ranjan to conditional rendering through element variable</div>
+        }
+        return (
+        <div>
+            {message}
+        </div>
+        )
+    ```
+
+    + `Ternary conditional operator:` we can use it inside the JSX. It is simpler.
+    ```
+    return (
+        <div>
+            {this.state.isLoggedIn ? "Welcome Aditya to ternary conditional" : "Welcome Ranjan to ternary conditional"}
+        </div>
+        )
+    ```
+
+    + `Short circuit operator:` when you want to render either something or nothing. If the left hand side is true, then it also evaluates the right hand side. However, if the left hand side is false, then the right hand side will never be evaluated. As it doesn’t affect the final value of the whole expression. Make sure to add the return keyword at the beginning of the statement.
+    ```
+    return this.state.isLoggedIn && <div>Welcome Aditya to short circuit operator.</div> 
+    ```
+
+2. **Why do we need State variable? why we can't use normal Javascript variable?**
+
+    + Many developers have this confusion today we will see that Why with the help of following example:
+
+    + To understand this we will introduce on feature in our app is a `‘login/logout’` button
+
+    + Inside Header component we are adding the button look at the code given below. also we want to make that login keyword dynamic it should change to logout after 
+    clicking.
+
+    + `step1 ——>`
+
+        + We create `btnName` variable with login string stored in it and we are going use that btnName as a button text look at the code below
+
+    + `step2 ——>`
+
+        + Upon clicking this button, it changes to `‘logout’`.
+    
+    ```
+    const btnName = "Login";
+    
+    return (
+        <div className="container header">
+            <a>logo</a>
+            {navItems}
+            
+            <button
+            className="login"
+            onclick={() => {
+                btnName = "Logout";
+                }}
+            >
+            {btnName}
+            </button>
+        </div>
+        );
+    
+    ```
+    + But it will not change 😒.
+    + It's frustrating that despite updating the `btnName` value and seeing the change reflected in the `console`, but the UI remains unchanged. 
+    + This happens because we're treating `btnName` as a regular variable. 
+    + To address this issue, we need a mechanism that triggers a `UI refresh` whenever `btnName` is updated. 
+    + To ensure UI updates reflect changes in `btnName`, we may need to use state management that automatically refreshes the UI when data changes. 
+    + That's the reasone we need state variable `useState()`.
+
+    <br>
+    
+    Let's utilize `reactBtn` as a state variable using `useState()` instead of *`btnName`* 
+
+    Here's the code:
+    ```
+    const [reactBtn, setReactBtn] = useState("login");
+    ```
+    To update the default value of `reactBtn`, we use `setReactBtn` function.
+
+    > 📢NOTE: 
+    In React, we can't directly update a state variable like we would use a normal JavaScript variable. Instead, we must use the function provided by the `useState()` hook. This function allows us to update the state and triggers a re-render of the component, ensuring our UI is always up-to-date with the latest state.
+
+    With the code provided below, we've enhanced the functionality of our app. Now, we can seamlessly toggle between `"login"` and `"logout"` states using a ternary operator. This addition greatly improves the user experience.
+
+    ```
+    const [loginBtn, setLoginBtn] = useState("Login");
+
+    <button
+        className="nav-link"
+        onClick={() => {
+        loginBtn === "Login"
+            ? setLoginBtn("Logout")
+            : setLoginBtn("Login");
+        }}
+    >
+        {loginBtn}
+    </button>
+    ```
+> NOTE :
+The interesting aspect of the above example is how we manage to modify a const  variable like `reactBtn`, which traditionally isn't possible. However, because React rerenders the entire component when a state variable changes, it essentially creates a new instance of `reactBtn` with the 
+updated value. So, in essence, we're not updating `reactBtn` instead, React creates a new one with the modified value each time the state changes. This is the beauty of React.
+
+> Important question
+ + **Once login name changed then it only rendered the updated `value` or the whole `Header` component?**
+    + It re-rendered the whole `Header` component.
+
+3. **When to useState()?**
+
+    + If you want to make your component dynamic
+    + if you want someting should change in your component
+    
+    We use local state variables. Here, `useState()` comes into the picture.
+
+
+## Search Functionality
+When you input text into the search field, it provides suggestions based on the data related to restaurants that we already have.
+
+`step 1 ——>`
+
+Let's create a search bar within a  `<div>`  element and assign any class name of your choice to it. Additionally, we'll give class names to the input field and button inside the search bar.
+
+`step 2 ——>`
+
+Upon clicking the button, filter the restaurant cards and update the UI to retrieve data from the input box. To link our input to the button, we'll use the `value`  attribute within the input field and bind that value to a local state variable. We'll create a local state variable named  `searchText`  along with a function named  `setSearchText`  to update the value. lets see below code will work or not by simple puting the call back function. 
+
+```
+const [searchText, setsearchText] = useState("");
+<div className="search">
+  <input type="text" className="search-box" value={searchText} />
+  <button className="searchBtn" onClick={() => {
+  console.log(searchText);
+  }}>
+    Search
+  </button>
+</div>;
+```
+we could see that our input not taking value. we unable to type any thing. 
+
++ we knew already, we have bind this searchText to the input field. what ever is inside the searchText variable will inside the value attribute of the input field.
+
++ when we will change the value of input field by typing on it still it will tied to the searchText but searchText is not Updating . because default value of search text is empty string .this is most important point to understand whole 
+concept. this input box not changed unless we change the search text.
+
+1. **How could we solve this problem ?**
+
+To solve this, we have to add `onChange` eventHandler inside the input field, so as soon as input changes the onchange call back function should also be changed the input text.
+
+Inside the onchange event handler we have event `‘e’` inside the call back . so access that typed input by using `event` `‘e’` see the code
+
+```
+  <input type="text" className="search-box" value={searchText} 
+  onchange={(e)=>{setSearchText(e.target.value)}/>
+```
+based on the `onChange` we have make in the code, now we can type inside the search box and see the output inside the console.
+
+> 📢NOTE: when ever search text is change on the every key press state variable re render the component. its find the difference between every updated V-DOM with new text added inside the input field with older one.
+
+> `Important :` 
+    + Whenever state variables update, react triggers a reconciliation cycle(re-renders the component).
+    + React is re-rendering the whole body component, but it is only updating input box value inside the DOM.
+
+`Step 3 ——>`
+
+We're currently filtering the list of restaurants to update the UI. When we type a word in the input field, it filters out the restaurant cards based on whether the typed word matches any restaurant names. However, we're facing a challenge with the input field being case-sensitive. We want the suggestions to be based solely on the word typed, without considering whether it's in uppercase or lowercase.
+
+2. **How could we solve this problem ?**
+
+To fix the problem, we just need to use the code provided. It uses `toLowerCase()` to make our search bar insensitive to capitalization.
+
+```
+<button
+  className="searchBtn"
+  onClick={() => {
+    // filter the Restaurant and update the UI
+    const filtertheRestaurant = listOfRestaurant.filter((res) => {
+      return res.info.name.toLowerCase().includes(searchText.toLowerCase());
+    });
+    setListOfRestaurant(filtertheRestaurant);
+  }}
+>
+  Search
+</button>;
+```
+`Step 4 ——>`
+
+We've encountered another issue in our app: after searching for a restaurant, the UI doesn't render anything when we search again. Instead, we only see the Shimmer UI.
+
+3. **How could we solve this problem ?**
+
+here problem is when we search 1st time we are updating `listOfRestaurents`. If we try to search it again it is searching from previous updated list thats the problem. simple solution for this instead of filtering the original data we simple make a copy to of that original data in our case it is nothing but a `listOfRestaurant` and stored the copy with new variable `filteredRestaurant`.
+
+```
+//original 
+const [listOfRestaurant, setListOfRestaurant] = useState([]);
+
+//copy
+const [filteredRestaurant, setFilteredRestaurant] = useState([]);
+```
+
+In our code, when we fetch data using the `fetchData` function, it's important to update the rendering to display the new data. We achieve this by updating the 
+state variables `listOfRestaurant` and `filteredListOfRestaurant` using functions provided by the `useState()` hook. Initially, both arrays are empty, but after fetching data, we fill them with the retrieved information. otherwise we won’t see any thing on the page.
+
+```
+const fetchData = async () => {
+const data = await fetch(
+"https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.9615398&ln
+g=79.2961468&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+);
+const json = await data.json();
+// here we are filling both the variable with new data with the help of their 
+functions.
+setListOfRestaurant(
+json.data.cards[4].card.card.gridElements.infoWithStyle.restaurant
+s
+);
+setFilteredRestaurant(
+json.data.cards[4].card.card.gridElements.infoWithStyle.restaurant
+s
+);
+};
+```
+    📢IMPORTANT: 
+    here there is two important points to remember 
+
+    1) When we need to modify the list Of Restaurants based on 
+    certain conditions, we're essentially using the original 
+    data we fetched and stored within the `listOfRestaurant` variable. (original)
+    
+    2) To display data on the UI, we use a copy of 
+    `listOfRestaurant` called `filteredRestaurant`. (copy)
+
+

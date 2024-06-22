@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import $ from "jquery";
@@ -7,6 +7,8 @@ import Logo from "../../media/logo.png";
 import icon from "../../media/user_icon.png";
 
 const Header = () => {
+  const [loginBtn, setLoginBtn] = useState("Login");
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark ">
@@ -46,6 +48,18 @@ const Header = () => {
                 <a className="nav-link" href="#">
                   Cart
                 </a>
+              </li>
+              <li className="nav-item">
+                <button
+                  className="nav-link"
+                  onClick={() => {
+                    loginBtn === "Login"
+                      ? setLoginBtn("Logout")
+                      : setLoginBtn("Login");
+                  }}
+                >
+                  {loginBtn}
+                </button>
               </li>
             </ul>
             <div className="right">
