@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import RestroCard from "./RestroCard";
 import { resList } from "../utils/mockData";
+import Shimmer from "./Shimmer";
 
 const Body = () => {
   // ***************************************
@@ -84,8 +85,8 @@ const Body = () => {
 
   // **************************************
   // * conditional rendering using ternery operator
-  return restaurantsList.length === 0 ? (
-    <h1 className="text-white text-center my-5">Loading.....</h1>
+  return restaurantsList && restaurantsList.length === 0 ? (
+    <Shimmer />
   ) : (
     <div className="app_body ">
       {/* Restaurant Card */}
@@ -100,8 +101,8 @@ const Body = () => {
                 const filteredList = restaurantsList.filter(
                   (res) => res.info.avgRating > 4.2
                 );
-                // console.log(filteredList)
-                setRestaurantsList(filteredList);
+                console.log(filteredList);
+                setFilteredRestaurantsList(filteredList);
               }}
             >
               Top Rated Restaurant
@@ -145,7 +146,7 @@ const Body = () => {
           </div> */}
 
           {/* Using Live data */}
-          {filteredRestaurantsList.length > 0 ? (
+          {filteredRestaurantsList && filteredRestaurantsList.length > 0 ? (
             filteredRestaurantsList.map((restaurant) => (
               <div className="col">
                 <RestroCard key={restaurant.id} resDataList={restaurant} />
@@ -153,7 +154,7 @@ const Body = () => {
             ))
           ) : (
             <h2 className="w-100 my-5 text-white text-center">
-              {filteredRestaurantsList.length === 0
+              {filteredRestaurantsList && filteredRestaurantsList.length === 0
                 ? "Sorry, no restaurants found. Please try a different search."
                 : ""}
             </h2>

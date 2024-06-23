@@ -28,7 +28,7 @@ body{
 
 .card:hover{
     cursor: pointer;
-    border: 1px solid burlywood;
+    border: 1px solid #deb887;
 }
 
 .nav-link, .card-subtitle, .card{
@@ -37,4 +37,43 @@ body{
 
 .fa-circle{
     font-size: 5px;
+}
+
+.shimmer_effect, .shimmer_effect_container{
+    background: linear-gradient(-45deg, #eee 40%, #fafafa 50%, #eee 60%);
+   background-size: 300%;
+   background-position-x: 100%;
+   animation: shimmer 1s infinite linear;
+}
+.shimmer_effect{
+    width: 25%;
+    height: 30px;
+}
+
+.shimmer_effect_container{
+    width: 302px;
+
+}
+.shimmer_effect_container img{
+    height: 200px;
+    width: 300px;
+    background: linear-gradient(-45deg, #ebe7e7 40%, #fafafa 50%, #ebe7e7 60%);
+   background-size: 300%;
+   background-position-x: 100%;
+   animation: shimmer 1s infinite linear;
+}
+.shimmer_effect_item{
+    background: linear-gradient(-45deg, #ebe7e7 40%, #fafafa 50%, #ebe7e7 60%);
+    background-size: 300%;
+    background-position-x: 100%;
+    animation: shimmer 1s infinite linear;
+    width: 75%;
+    height: 25px;
+    
+}
+
+@keyframes shimmer {
+   to {
+      background-position-x: 0%
+   }
 }
