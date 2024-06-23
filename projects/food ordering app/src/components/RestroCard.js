@@ -32,7 +32,7 @@ const RestroCard = (props) => {
           <h5 className="card-subtitle mb-2 fw-normal">
             <i className="fa-solid fa-star"></i>
             {avgRatingString} <i className="fa-solid fa-circle"></i>{" "}
-            {sla.slaString}
+            {sla?.slaString}
           </h5>
           <h6 className="card-subtitle mb-2 fw-light">{cuisines.join(",")}</h6>
           <h6 className="card-subtitle mb-2 fw-normal pt-1">{costForTwo}</h6>

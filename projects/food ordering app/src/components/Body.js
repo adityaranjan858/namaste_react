@@ -101,7 +101,7 @@ const Body = () => {
                 const filteredList = restaurantsList.filter(
                   (res) => res.info.avgRating > 4.2
                 );
-                console.log(filteredList);
+                // console.log(filteredList);
                 setFilteredRestaurantsList(filteredList);
               }}
             >
@@ -148,8 +148,8 @@ const Body = () => {
           {/* Using Live data */}
           {filteredRestaurantsList && filteredRestaurantsList.length > 0 ? (
             filteredRestaurantsList.map((restaurant) => (
-              <div className="col">
-                <RestroCard key={restaurant.id} resDataList={restaurant} />
+              <div key={restaurant.info.id} className="col">
+                <RestroCard resDataList={restaurant} />
               </div>
             ))
           ) : (
