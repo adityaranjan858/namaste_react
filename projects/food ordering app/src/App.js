@@ -7,6 +7,7 @@ import AboutUs from "./components/AboutUs";
 import ContactUs from "./components/ContactUs";
 import Error from "./components/Error";
 import Cart from "./components/Cart";
+import RestroMenu from "./components/RestroMenu";
 const AppLayout = () => {
   return (
     <>
@@ -38,6 +39,13 @@ const appRouter = createBrowserRouter([
       {
         path: "/cart",
         element: <Cart />,
+      },
+      // ":resId" : this part of the URL is dynamic.
+      // this means resId can be changed according to the ID of the restaurant.
+      // So, this resId will be the ID of the restaurant.
+      {
+        path: "/restaurants/:resId",
+        element: <RestroMenu />,
       },
     ],
     errorElement: <Error />,

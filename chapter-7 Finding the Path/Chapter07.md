@@ -285,6 +285,102 @@ This way, we can access and work with the state and state update function in our
   ```
 6. **Dynamic Routing**
 
+    In the context of React Router DOM, dynamic routing refers to the ability to handle route matching and rendering based on dynamic data or conditions within your React components. This means that the routing logic can be influenced by factors such as user input, API responses, or the current state of the application.
+
+    Here are some common scenarios where dynamic routing in React Router DOM may be used:
+
+    1. **Dynamic Route Parameters**: React Router allows you to define dynamic segments in the route path using parameters. For example, a route path like `/users/:id` can be used to display details of a specific user based on the `id` parameter in the URL.
+    
+    Example :
+      ```    
+        // App.js
+        
+        import React from 'react';
+        import { BrowserRouter as Router, Route } from 'react-router-dom';
+
+        const UserDetail = ({ match }) => {
+          const userId = match.params.id;
+          return <div>User ID: {userId}</div>;
+        };
+
+        const App = () => {
+          return (
+            <Router>
+              <Route path="/users/:id" component={UserDetail} />
+            </Router>
+          );
+        };
+
+        export default App;
+      ```
+        In this example, the UserDetail component receives the id parameter from the route path /users/:id, allowing it to render dynamic user details based on the id.
+
+    2. **Conditional Routing**: You can conditionally render components based on certain conditions within your React components. This can be useful for showing different views or redirecting users based on the state of the application.
+
+    Example :
+    ```
+    // App.js
+    
+    import React from 'react';
+    import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+
+    const App = () => {
+      const loggedIn = true; // Example condition for authentication
+      
+      return (
+        <Router>
+          <Route path="/dashboard">
+            {loggedIn ? <Dashboard /> : <Redirect to="/login" />}
+          </Route>
+        </Router>
+      );
+    };
+
+    export default App;
+    ```
+        In this example, the Dashboard component is only rendered if the loggedIn condition is true. Otherwise, the user is redirected to the /login route.
+
+    3. **Programmatic Navigation**: React Router DOM provides methods like `history.push()` to programmatically navigate to different routes based on user interactions or other events within your components.
+
+    Example :
+
+    ```
+    // NavigationButton.js
+    
+    import React from 'react';
+    import { useHistory } from 'react-router-dom';
+
+    const NavigationButton = ({ path, buttonText }) => {
+      const history = useHistory();
+      
+      const handleClick = () => {
+        history.push(path);
+      };
+
+      return <button onClick={handleClick}>{buttonText}</button>;
+    };
+
+    export default NavigationButton;
+    ```
+        In this example, the NavigationButton component allows for programmatic navigation to a specified path when the button is clicked using the history.push() method.
+        
+    4. **Route Configuration based on Data**: You can dynamically generate routes based on data received from an API or other external sources. This can be useful for creating a flexible routing structure that adapts to changing data.
+
+    5. **Protected Routes**: Dynamic routing can be used to handle authentication and authorization logic, where certain routes are only accessible to authenticated users. This typically involves conditional rendering based on the authentication state of the user.
+
+    Overall, dynamic routing in React Router DOM allows you to create flexible and interactive navigation experiences in your React applications by adapting the routing behavior based on dynamic factors and conditions.  
+
+7. **useParams()**
+    + `useParams()` is a hook provided by React Router that allows you to access the `parameters` of the current `URL`.
+      
+      Example : Here's a basic example of how you can use the useParams() hook:
+
+      It is destructuring.
+      ```
+      const { resId } = useParams();
+      ```
+    + In this example, if the URL is '/restaurants/123', the component will receive '123' as the 'id' parameter.
+
 
 
 ## SPA (Single page application)
@@ -349,5 +445,86 @@ This way, we can access and work with the state and state update function in our
 
     In summary, client-side routing is suitable for building SPAs and offers faster, more interactive user experiences but can pose SEO challenges. Server-side routing is more SEO-friendly and is used for traditional websites with separate HTML pages, 
     but it can be slower in terms of page transitions. The choice between these two routing approaches depends on the specific requirements and goals of a web application or website. In some cases, a hybrid approach that combines both client-side and server-side routing techniques may be used to achieve the best of both worlds.
+
+## Various Ways To Add Images 
+
+There are several ways to add and display images.
+
+1. Importing images using ES6 Modules 
+2. Using public folder  
+3. Loading images from a remote source  
+4. Using image assets within CSS
+  + `Importing images using ES6 Modules:` We can import images directly using ES6 modules. This is a common approach for  small to medium-sized apps , and it's straightforward. Firstly, We have to place our image in the project directory (e.g., in the src folder or a subfolder).
+
+Example:
+```
+import React from 'react';
+import myImage from './my_image.jpg';
+function App() {
+    return (
+        <div>
+            <img src={myImage} alt="My Image" />
+        </div>
+    );
+}
+export default App;
+```
++ `Using public folder:` If we want to reference images in the public folder, we can do so without importing them explicitly. This method is useful for handling large image assets or for dynamic image URLs. Place your image in the public directory.
+```
+// public/my_image.jpg
+```
+Then, reference it in your code:
+```
+import React from 'react';
+function App() {
+    return (
+        <div>
+            <img src={process.env.PUBLIC_URL + '/my_image.jp
+g'} alt="My Image" />
+        </div>
+    );
+}
+export default App;
+```
++ `Loading images from a remote source:` We can load images from a remote source, such as an external URL or a backend API, by specifying the image URL directly in our img tag.
+
+Example:
+```
+import React from 'react';
+function App() {
+    const imageUrl = 'https://example.com/my_image.jpg';
+    return (
+        <div>
+            <img src={imageUrl} alt="My Image" />
+        </div>
+    );
+}
+export default App;
+```
++ `Using image assets within CSS:` We can also use images as background images or in other CSS styling. In this case, we can reference the image in your CSS file.
+
+Example CSS (styles.css):
+```
+.image-container {
+    background-image: url('/my_image.jpg');
+    width: 300px;
+    height: 200px;
+}
+```
+Then, apply the CSS class to your JSX:
+```
+import React from 'react';
+import './styles.css';
+function App() {
+    return (
+        <div className="image-container">
+            {/* Content goes here */}
+        </div>
+    );
+}
+export default App;
+```
+
+Choose the method that best fits your project's requirements and organization. Importing images using ES6 modules is the most common and convenient approach for most React applications, especially for small to medium-sized projects. For larger projects with many images, consider the folder structure and organization to keep our code clean and maintainable.
 
 
