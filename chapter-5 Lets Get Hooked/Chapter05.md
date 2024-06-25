@@ -133,12 +133,8 @@ scenario effectively.
 
 > 📢NOTE: 
     
-    1. If you are using Vs-Code Editor during 
-    import it automatically tracks the path of the component 
-    and gives suggestions to us. so we don't have to worry 
-    about the path.
-    2. We don't have to put an extension in the file in the 
-    import statement. If want to put then completely Fine.
+    1. If you are using Vs-Code Editor during import it automatically tracks the path of the component and gives suggestions to us. so we don't have to worry about the path.
+    2. We don't have to put an extension in the file in the import statement. If want to put then completely Fine.
 
 > Important Note : `resList` contains hard-coded data and we never put any hard-coded data like the source-URL of logo and images inside the component file. That's not the best practice 
 the industry follows.
@@ -336,16 +332,9 @@ UI(display screen) ?
 
 > 📢NOTE: 
 
-    - The crucial point about State variables is that 
-    whenever they update, React triggers a reconciliation 
-    cycle and re-renders the component. 
-    - This means that as soon as the data layer changes, 
-    React promptly updates the UI layer. The data layer is 
-    always kept in sync with the UI layer. 
-    - To achieve this rapid operation, React employs a 
-    reconciliation algorithm, also known as the diffing 
-    algorithm or React-Fibre which we will delve into further 
-    below.
+    - The crucial point about State variables is that whenever they update, React triggers a reconciliation cycle and re-renders the component. 
+    - This means that as soon as the data layer changes, React promptly updates the UI layer. The data layer is always kept in sync with the UI layer. 
+    - To achieve this rapid operation, React employs a reconciliation algorithm, also known as the diffing algorithm or React-Fibre which we will delve into further below.
 
 5. **React is often praised for its speed, have you ever wondered why? 🤔**
 

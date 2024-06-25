@@ -149,7 +149,10 @@ const Body = () => {
           {filteredRestaurantsList && filteredRestaurantsList.length > 0 ? (
             filteredRestaurantsList.map((restaurant) => (
               <div key={restaurant.info.id} className="col">
-                <Link to={"/restaurants/" + restaurant.info.id}>
+                <Link
+                  to={"/restaurants/" + restaurant.info.id}
+                  className="text-decoration-none"
+                >
                   <RestroCard resDataList={restaurant} />
                 </Link>
               </div>

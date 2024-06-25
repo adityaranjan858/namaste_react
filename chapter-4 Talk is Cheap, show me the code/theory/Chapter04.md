@@ -143,7 +143,7 @@ CSS Modules
 ## Config Driven UI
 
 1. What is config?
-    + Config is the data coming from APi.
+    + Config is the data coming from API.
 
     + Basically, how our UI looks like is totally depend on using a config 
 
@@ -192,7 +192,7 @@ This `?` is called as Optional Chaining.
 
 + **What is Optional Chaining?**
 
-+ The optional chaining `?.` is an error-proof way to access nested ob+ ject properties, even if an intermediate property doesn’t exist. It+  works similar to Chaining `.` except that it does not report the error, instead it returns a value which is undefined. It also works with function call when we try to make a call to a method which may not exist.
++ The optional chaining `?.` is an error-proof way to access nested object properties, even if an intermediate property doesn’t exist. It works similar to Chaining `.` except that it does not report the error, instead it `returns a value` which is `undefined`. It also works with function call when we try to make a call to a method which may not exist.
 
 + When we want to check a value of the property which is deep inside a tree-like structure, we often have to perform check whether intermediate nodes exist.
 
@@ -315,7 +315,7 @@ But if we give each of them a unique ID then react knows where
 to put that component according to the ID. It is a good 
 optimization and performance thing. 
 
-> Note* Never use index as keys in map. It is not recommended by Official React website.
+> Note* Never use index as keys in `map()` method. It is not recommended by Official React website.
 but remember `index` is passed as a second parameter to the arrow function within the `map()` method and that index is used as a value to the key prop.
 ```
 const Body = () => {
