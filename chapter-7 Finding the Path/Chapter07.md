@@ -381,7 +381,92 @@ This way, we can access and work with the state and state update function in our
       ```
     + In this example, if the URL is '/restaurants/123', the component will receive '123' as the 'id' parameter.
 
+8. **How do you create Nested Routes react-router-dom configuration ?**
 
+    > In React applications using react-router-dom, we can create nested routes by nesting our  <Route>  components inside each other within the route configuration. This allows you to define routes and components hierarchically, making it easier to manage the routing structure of your application.
+    ```
+    💡Here's a step-by-step guide on how to create nested routes using react-router-dom:
+    ```
+    1. Install react-router-dom if we haven't already :
+    ```
+    npm install react-router-dom
+    ```
+    2. Import the necessary components from react-router-dom in your application file :
+    ```
+    import { BrowserRouter as Router, Route, Switch } from 'react
+    -router-dom';
+    ```
+    + Defining our route hierarchy by nesting components within each other. Typically, this is done within a component that acts as a layout or container for the nested routes. For example, if we have a layout component called Layout:
+
+      ```
+      import React from 'react';
+      import { Route } from 'react-router-dom';
+      // Import your nested route components
+      import Home from './Home';
+      import About from './About';
+      function Layout() {
+        return (
+          <div>
+            <h1>My App</h1>
+            <Route path="/home" component={Home} />
+            <Route path="/about" component={About} />
+          </div>
+        );
+      }
+      export default Layout;
+      ```
+    + In our main application file, wrap our entire application with the Router component, and use the component to render only the first matching route:
+      ```
+      import React from 'react';
+      import { BrowserRouter as Router, Route, Switch } from 'react
+      -router-dom';
+      // Import your Layout component that defines nested routes
+      import Layout from './Layout';
+      function App() {
+        return (
+          <Router>
+            <Switch>
+              <Route path="/" component={Layout} />
+            </Switch>
+          </Router>
+        );
+      }
+      export default App;
+      ```
+  + Now we have a simple example of nested routes. In this case, the Layout component defines the `/home` and `/about` routes, and these nested routes can have their own components and nested routes as well. We can continue to nest routes further by adding more  `<Route>`  components inside the Home and About components to create a more complex routing structure. Remember that this is just a basic example, and we can customize our routing structure based on the requirements of our application. We can also use the exact prop on routes to ensure that only the exact path is matched if needed.
+
+9. **Read about `createHashRouter`, `createMemoryRouter` from React Router docs.**
+
+    1. **`createHashRouter`** - createHashRouter is part of the React Router library and provides routing capabilities for single-page applications (SPAs). It's commonly used for building client-side navigation within applications. Unlike traditional server-side routing, it uses the fragment identifier (hash) in the URL to manage and handle routes on the client side. This means that changes in the URL after the 
+        > symbol do not trigger a full page reload, making it suitable for SPAs.
+
+        To use createHashRouter, we typically import it from the React Router library and define our routes using Route components. Here's a basic example of how you might use it:
+        ```
+        import { createHashRouter, Route } from 'react-router-dom';
+        const App = () => (
+          <createHashRouter>
+            <Route path="/" component={Home} />
+            <Route path="/about" component={About} />
+            <Route path="/contact" component={Contact} />
+          </createHashRouter>
+        );
+        ```
+    2. **`createMemoryRouter`** - createMemoryRouter is another routing component provided by React Router. Unlike createHashRouter or BrowserRouter, createMemoryRouter is not associated with the browser's URL. Instead, it allows you to create an in-memory router for testing or other scenarios where you don't want to interact with the actual browser's URL.
+
+        ```
+        💡Here's a simple example of how to use createMemoryRouter:
+        ```
+        ```
+        import { createMemoryRouter, Route } from 'react-router-dom';
+        const App = () => (
+          <createMemoryRouter>
+            <Route path="/" component={Home} />
+            <Route path="/about" component={About} />
+            <Route path="/contact" component={Contact} />
+          </createMemoryRouter>
+        );
+        ```
+    + In both cases, we define our application's routes within the router component and specify the components to render for each route. The choice between `createHashRouter` and `createMemoryRouter` depends on our specific use case, such as whether we're building an SPA that interacts with the 's URL or a scenario where we need an in-memory router for testing.
 
 ## SPA (Single page application)
 1. **What is  SPA ?**
