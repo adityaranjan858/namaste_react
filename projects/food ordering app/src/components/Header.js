@@ -6,9 +6,12 @@ import Popper from "popper.js";
 import Logo from "../../media/logo.png";
 import icon from "../../media/user_icon.png";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Header = () => {
   const [loginBtn, setLoginBtn] = useState("Login");
+
+  const status = useOnlineStatus();
 
   return (
     <>
@@ -30,6 +33,16 @@ const Header = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+              <li className="nav-item">
+                <Link className="nav-link " aria-current="page" to="">
+                  Online status
+                  {status === true ? (
+                    <i class="fa-solid fa-circle-check ps-1 text-success"></i>
+                  ) : (
+                    <i class="fa-solid fa-circle-check ps-1 text-danger"></i>
+                  )}
+                </Link>
+              </li>
               <li className="nav-item">
                 <Link className="nav-link " aria-current="page" to="/">
                   Home

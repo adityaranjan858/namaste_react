@@ -2,20 +2,25 @@ import React, { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { RES_MENU_API, RES_MENU_IMG_CDN } from "../utils/constants";
 import { useParams } from "react-router-dom";
+import useRestroMenu from "../utils/useRestroMenu";
 
 const RestroMenu = () => {
-  const [resInfo, setResInfo] = useState([]);
+  // const [resInfo, setResInfo] = useState([]);
   const { resId } = useParams();
-  useEffect(() => {
-    fetchMenu();
-  }, []);
 
-  const fetchMenu = async () => {
-    const data = await fetch(RES_MENU_API + resId);
-    const jsonData = await data.json();
-    setResInfo(jsonData.data);
-  };
+  // ! Now, There is no need to fetch data inside the component, we can make a custom hook and use it here.
+  // useEffect(() => {
+  //   fetchMenu();
+  // }, []);
 
+  // const fetchMenu = async () => {
+  //   const data = await fetch(RES_MENU_API + resId);
+  //   const jsonData = await data.json();
+  //   setResInfo(jsonData.data);
+  // };
+
+  const resInfo = useRestroMenu(resId);
+  console.log(resInfo);
   if (resInfo.length === 0) return <Shimmer />;
 
   const itemCards =
@@ -40,8 +45,6 @@ const RestroMenu = () => {
     resInfo?.cards && resInfo.cards.length > 0
       ? resInfo.cards[2]?.card?.card?.info
       : null;
-
-  console.log(itemCards);
 
   return (
     <div className="menu container">

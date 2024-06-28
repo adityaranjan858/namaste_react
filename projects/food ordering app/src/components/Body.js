@@ -4,6 +4,7 @@ import { resList } from "../utils/mockData";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import { RES_LIST_API } from "../utils/constants";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
   // ***************************************
@@ -39,6 +40,16 @@ const Body = () => {
   const [restaurantsList, setRestaurantsList] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [filteredRestaurantsList, setFilteredRestaurantsList] = useState([]);
+
+  const onlineSts = useOnlineStatus();
+
+  if (onlineSts === false) {
+    return (
+      <h1>
+        Looks like you are offline! Please check your internet connection.
+      </h1>
+    );
+  }
 
   // search Input handler
   const searchInpHandler = (event) => {
