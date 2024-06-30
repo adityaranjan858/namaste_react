@@ -43,14 +43,6 @@ const Body = () => {
 
   const onlineSts = useOnlineStatus();
 
-  if (onlineSts === false) {
-    return (
-      <h1>
-        Looks like you are offline! Please check your internet connection.
-      </h1>
-    );
-  }
-
   // search Input handler
   const searchInpHandler = (event) => {
     setSearchText(event.target.value);
@@ -87,6 +79,14 @@ const Body = () => {
       json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
   };
+
+  if (onlineSts === false) {
+    return (
+      <h1>
+        Looks like you are offline! Please check your internet connection.
+      </h1>
+    );
+  }
 
   // **************************************
   // * conditional rendering using if/else

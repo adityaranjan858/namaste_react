@@ -37,9 +37,9 @@ const Header = () => {
                 <Link className="nav-link " aria-current="page" to="">
                   Online status
                   {status === true ? (
-                    <i class="fa-solid fa-circle-check ps-1 text-success"></i>
+                    <i className="fa-solid fa-circle-check ps-1 text-success"></i>
                   ) : (
-                    <i class="fa-solid fa-circle-check ps-1 text-danger"></i>
+                    <i className="fa-solid fa-circle-check ps-1 text-danger"></i>
                   )}
                 </Link>
               </li>
@@ -61,6 +61,11 @@ const Header = () => {
               <li className="nav-item">
                 <Link className="nav-link" to="/cart">
                   Cart
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/grocery">
+                  Grocery
                 </Link>
               </li>
               <li className="nav-item">
