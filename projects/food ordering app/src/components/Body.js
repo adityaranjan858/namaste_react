@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import RestroCard from "./RestroCard";
+import RestroCard, { withRestroOPenStatus } from "./RestroCard";
 import { resList } from "../utils/mockData";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
@@ -43,6 +43,10 @@ const Body = () => {
 
   const onlineSts = useOnlineStatus();
 
+  // Using HOC
+  const RestroCardWithOpenStatus = withRestroOPenStatus(RestroCard);
+  // console.log(filteredRestaurantsList);
+
   // search Input handler
   const searchInpHandler = (event) => {
     setSearchText(event.target.value);
@@ -54,7 +58,7 @@ const Body = () => {
     const filteredList = restaurantsList.filter((res) =>
       res.info.name.toLowerCase().includes(searchText.toLowerCase())
     );
-    console.log(filteredList);
+    // console.log(filteredList);
     setFilteredRestaurantsList(filteredList);
   };
 
@@ -164,7 +168,12 @@ const Body = () => {
                   to={"/restaurants/" + restaurant.info.id}
                   className="text-decoration-none"
                 >
-                  <RestroCard resDataList={restaurant} />
+                  {restaurant.info.availability.opened === true ? (
+                    <RestroCardWithOpenStatus resDataList={restaurant} />
+                  ) : (
+                    <RestroCard resDataList={restaurant} />
+                  )}
+                  {/* <RestroCard resDataList={restaurant} /> */}
                 </Link>
               </div>
             ))

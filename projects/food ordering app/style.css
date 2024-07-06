@@ -78,3 +78,7 @@ body{
       background-position-x: 0%
    }
 }
+
+.category_title{
+    cursor: pointer;
+}

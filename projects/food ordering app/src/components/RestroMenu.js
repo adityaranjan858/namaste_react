@@ -3,6 +3,7 @@ import Shimmer from "./Shimmer";
 import { RES_MENU_API, RES_MENU_IMG_CDN } from "../utils/constants";
 import { useParams } from "react-router-dom";
 import useRestroMenu from "../utils/useRestroMenu";
+import RestroCategory from "./RestroCategory";
 
 const RestroMenu = () => {
   // const [resInfo, setResInfo] = useState([]);
@@ -20,13 +21,18 @@ const RestroMenu = () => {
   // };
 
   const resInfo = useRestroMenu(resId);
-  console.log(resInfo);
+  // console.log(resInfo);
   if (resInfo.length === 0) return <Shimmer />;
 
   const itemCards =
     resInfo?.cards && resInfo.cards.length > 4
       ? resInfo.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card
           ?.card?.itemCards
+      : null;
+
+  const categoryTitle =
+    resInfo?.cards && resInfo.cards.length > 4
+      ? resInfo.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards
       : null;
 
   const {
@@ -71,8 +77,21 @@ const RestroMenu = () => {
           </div>
         </div>
       </div>
-      <h2 className="pb-2 border-bottom border-2">Menu</h2>
-      <div>
+      <h2 className="pb-2 text-decoration-underline text-center mb-5">Menu</h2>
+
+      {categoryTitle &&
+        categoryTitle.length > 0 &&
+        categoryTitle.map((category) =>
+          category.card.card["@type"].includes(
+            "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+          ) ? (
+            <RestroCategory data={category} />
+          ) : (
+            ""
+          )
+        )}
+
+      {/* <div>
         {itemCards &&
           itemCards.length > 0 &&
           itemCards.map((items) => (
@@ -99,7 +118,7 @@ const RestroMenu = () => {
               <hr />
             </div>
           ))}
-      </div>
+      </div> */}
     </div>
   );
 };

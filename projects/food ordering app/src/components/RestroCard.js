@@ -1,5 +1,6 @@
 import React from "react";
 import { RES_IMG_CDN } from "../utils/constants";
+// import RestroCard from "./RestroCard";
 
 const RestroCard = (props) => {
   // using props
@@ -40,6 +41,19 @@ const RestroCard = (props) => {
       </div>
     </>
   );
+};
+
+//  Higher order component
+
+export const withRestroOPenStatus = (RestroCard) => {
+  return (props) => {
+    return (
+      <>
+        <label>Restaurant is Open!!</label>
+        <RestroCard {...props} />
+      </>
+    );
+  };
 };
 
 export default RestroCard;
