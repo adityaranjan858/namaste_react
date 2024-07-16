@@ -9,6 +9,8 @@ const RestroMenu = () => {
   // const [resInfo, setResInfo] = useState([]);
   const { resId } = useParams();
 
+  const [showIndex, setShowIndex] = useState(2);
+
   // ! Now, There is no need to fetch data inside the component, we can make a custom hook and use it here.
   // useEffect(() => {
   //   fetchMenu();
@@ -81,11 +83,16 @@ const RestroMenu = () => {
 
       {categoryTitle &&
         categoryTitle.length > 0 &&
-        categoryTitle.map((category) =>
+        categoryTitle.map((category, index) =>
           category.card.card["@type"].includes(
             "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
           ) ? (
-            <RestroCategory data={category} />
+            <RestroCategory
+              key={category.card.card.title}
+              data={category}
+              showItems={index === showIndex ? true : false}
+              setShowIndexes={() => setShowIndex(index)}
+            />
           ) : (
             ""
           )

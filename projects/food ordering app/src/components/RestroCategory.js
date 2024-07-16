@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import RestroCategoryItemList from "./RestroCategoryItemList";
 
-const RestroCategory = ({ data }) => {
-  const [showItems, setShowItems] = useState(false);
+const RestroCategory = ({ data, showItems, setShowIndexes }) => {
+  // const [showItems, setShowItems] = useState(false);
   const title = data?.card?.card?.title;
   const itemLists = data?.card?.card?.itemCards;
 
   const showItemsHandler = () => {
-    setShowItems(!showItems);
+    // setShowItems(!showItems);
+    setShowIndexes();
   };
 
   return (
