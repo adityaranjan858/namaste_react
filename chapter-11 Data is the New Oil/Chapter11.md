@@ -164,6 +164,21 @@ Context Provider and Context Consumer
 
 > In React, the `Context API` provides `a way to pass data through the component tree without having to pass props manually at every level.` The two main components associated with the `Context API are the Context Provider and Context Consumer .`
 
+> Note : We can create a context as many as we want.
+1. For creating a context we use `createContext()` : 
+```
+const UserContext = createContext()
+
+// we pass the default value here.
+// Always start with the capital letter.
+```
+2. For using the context we use `useContext()` : 
+```
+const data = useContext(UserContext)
+```
+  1. Should we keep all the data inside context?
+  + Only the data which you are using at multiple places or you feel that it can be used in multiple places , that is where you will use your context.
+
 `Context Provider:` The Context Provider is a `component that allows its children to subscribe to a context's changes .` It accepts a value prop, which is the data that will be shared with the components that are descendants of this provider. The Provider component is created using `React.createContext()`  and then rendered as part of the component tree. It establishes the context and provides the data to its descendants. 
 
 > 💡Here's an example:
@@ -187,7 +202,10 @@ class MyProvider extends React.Component {
   }
 }
 ```
-`Context Consumer:` The Context Consumer is a component that subscribes to the changes in the context provided by its nearest Context Provider ancestor. It allows components to access the context data without the need for prop drilling. The Consumer component is used within the JSX of a component to consume the context data. It takes a function as its child, and that function receives the current context value as an argument. Here's an example:
+`Context Consumer:` The Context Consumer is a component that subscribes to the changes in the context provided by its nearest Context Provider ancestor. It allows components to access the context data without the need for prop drilling. The Consumer component is used within the JSX of a component to consume the context data. It takes a function as its child, and that function receives the current context value as an argument. 
+> We use `consumer` in class component. 
+
+Here's an example:
 
 ```
 // Child component consuming the context
@@ -233,3 +251,75 @@ Yes, If we don't pass a value to the Provider in React's Context API, `it does u
 React Dev Tools 
 ---
  `React DevTools` is a browser extension that allows developers to inspect and debug React applications. It's available for both Chrome and Firefox and provides a panel with useful information about the component hierarchy, props, state, and more in a React application. You can use it to inspect and manipulate the state and props of your components, which can be very helpful for debugging and understanding the behavior of your React application.  
+
+ ![alt text](<profiler in chrome react dev tool.jpg>)
+
+ This profiler section can be used to find out the components which takes a lot of time to render when app grows big.
+ 
+### Controlled vs Uncontrolled Components in ReactJS:
+---
+**Controlled Components:**
+- Controlled components in React are components where the state is controlled by React. The component's state is stored in the React component and is passed down to the component as props.
+- Changes to the state of controlled components are handled through event handlers in the React component itself.
+- Controlled components provide a predictable behavior and a single source of truth for the component's state.
+- Examples include form inputs where the input value is controlled by React state.
+
+**Uncontrolled Components:** 
+- Uncontrolled components in React are components where the state is managed by the DOM (Document Object Model) directly.
+- These components are not controlled by the React state and their state and behaviors are managed independently by the DOM.
+- Uncontrolled components are useful for form elements like input, textarea, and select elements where direct access to the DOM is required.
+- Examples include file input fields that rely on the browser for handling the input value.
+
+Difference between Controlled and Uncontrolled Components:
+| Controlled Components                                        | Uncontrolled Components                                      |
+|--------------------------------------------------------------|--------------------------------------------------------------|
+| The component's state is controlled by React.               | The component's state is managed directly by the DOM.       |
+| Predictable behavior as controlled by its state.            | Less predictable as not controlled by a single source.      |
+| Internal state maintained by React.                         | Internal state is managed by the DOM.                      |
+| Changes are handled via event handlers in React components. | Changes and state are managed independently by the DOM.     |
+| Controlled by the parent component or React itself.         | Controlled directly by the DOM.                             |
+| Suitable for better control over form data and values.      | Useful when direct DOM manipulation is required.            |
+
+Refer to the provided code examples for practical implementation details of controlled and uncontrolled components in React.
+
+### Additional Example:
+
+```jsx
+// Controlled Component
+import { useState } from "react";
+
+function ControlledComponent() {
+    const [value, setValue] = useState("");
+
+    const handleChange = (e) => {
+        setValue(e.target.value);
+    };
+
+    return (
+        <input
+            type="text"
+            value={value}
+            onChange={handleChange}
+        />
+    );
+}
+
+// Uncontrolled Component
+import React, { useRef } from "react";
+
+function UncontrolledComponent() {
+    const inputRef = useRef(null);
+
+    const handleSubmit = () => {
+        console.log("Input value: ", inputRef.current.value);
+    };
+
+    return (
+        <input
+            type="text"
+            ref={inputRef}
+        />
+    );
+}
+```
+ 

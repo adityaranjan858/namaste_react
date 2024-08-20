@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import RestroCard, { withRestroOPenStatus } from "./RestroCard";
 import { resList } from "../utils/mockData";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import { RES_LIST_API } from "../utils/constants";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import { UserContext } from "../utils/UserContext";
 
 const Body = () => {
   // ***************************************
@@ -100,6 +101,9 @@ const Body = () => {
 
   // **************************************
   // * conditional rendering using ternery operator
+
+  const { loggedInUser, setUserName } = useContext(UserContext);
+
   return restaurantsList && restaurantsList.length === 0 ? (
     <Shimmer />
   ) : (
@@ -122,6 +126,17 @@ const Body = () => {
             >
               Top Rated Restaurant
             </button>
+          </div>
+
+          <div className="d-flex">
+            <label htmlFor="">Change User Name As Your Wish: </label>
+            <input
+              className="form-control "
+              type="text"
+              name=""
+              value={loggedInUser}
+              onChange={(e) => setUserName(e.target.value)}
+            />
           </div>
 
           <div>

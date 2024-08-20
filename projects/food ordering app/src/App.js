@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
@@ -8,18 +8,33 @@ import ContactUs from "./components/ContactUs";
 import Error from "./components/Error";
 import Cart from "./components/Cart";
 import RestroMenu from "./components/RestroMenu";
+import { UserContext } from "./utils/UserContext";
 // import Grocery from "./components/Grocery";
 
 const Grocery = lazy(() => import("./components/Grocery"));
 const AboutUs = lazy(() => import("./components/AboutUs"));
 
 const AppLayout = () => {
+  const [userName, setUserName] = useState();
+  useEffect(() => {
+    let data = {
+      name: "Aditya Ranjan",
+    };
+    setUserName(data.name);
+  }, []);
   return (
     <>
-      <div className="container-fluid">
-        <Header />
-        <Outlet />
-      </div>
+      {/* by default , it will show "Default User" */}
+      <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
+        {/* Aditya Ranjan */}
+        <div className="container-fluid">
+          {/* <UserContext.Provider value={{ loggedInUser: "Elon Musk" }}> */}
+          {/* Elon Musk */}
+          <Header />
+          {/* </UserContext.Provider> */}
+          <Outlet />
+        </div>
+      </UserContext.Provider>
     </>
   );
 };

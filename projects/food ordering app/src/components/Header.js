@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import $ from "jquery";
@@ -7,11 +7,14 @@ import Logo from "../../media/logo.png";
 import icon from "../../media/user_icon.png";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import { UserContext } from "../utils/UserContext";
 
 const Header = () => {
   const [loginBtn, setLoginBtn] = useState("Login");
 
   const status = useOnlineStatus();
+
+  const { loggedInUser } = useContext(UserContext);
 
   return (
     <>
@@ -79,6 +82,11 @@ const Header = () => {
                 >
                   {loginBtn}
                 </button>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="">
+                  {loggedInUser}
+                </Link>
               </li>
             </ul>
             <div className="right">

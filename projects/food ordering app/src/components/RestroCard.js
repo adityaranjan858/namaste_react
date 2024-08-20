@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { RES_IMG_CDN } from "../utils/constants";
+import { UserContext } from "../utils/UserContext";
 // import RestroCard from "./RestroCard";
 
 const RestroCard = (props) => {
@@ -20,6 +21,7 @@ const RestroCard = (props) => {
     cloudinaryImageId,
   } = resDataList.info;
 
+  const { loggedInUser } = useContext(UserContext);
   return (
     <>
       <div className="card my-3 h-100 lh-base">
@@ -37,6 +39,7 @@ const RestroCard = (props) => {
           </h5>
           <h6 className="card-subtitle mb-2 fw-light">{cuisines.join(",")}</h6>
           <h6 className="card-subtitle mb-2 fw-normal pt-1">{costForTwo}</h6>
+          <h6 className="card-subtitle mb-2 fw-normal pt-1">{loggedInUser}</h6>
         </div>
       </div>
     </>
