@@ -10,6 +10,8 @@ import Cart from "./components/Cart";
 import RestroMenu from "./components/RestroMenu";
 import { UserContext } from "./utils/UserContext";
 // import Grocery from "./components/Grocery";
+import { Provider } from "react-redux";
+import { appStore } from "./redux/store/appStore";
 
 const Grocery = lazy(() => import("./components/Grocery"));
 const AboutUs = lazy(() => import("./components/AboutUs"));
@@ -24,17 +26,19 @@ const AppLayout = () => {
   }, []);
   return (
     <>
-      {/* by default , it will show "Default User" */}
-      <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
-        {/* Aditya Ranjan */}
-        <div className="container-fluid">
-          {/* <UserContext.Provider value={{ loggedInUser: "Elon Musk" }}> */}
-          {/* Elon Musk */}
-          <Header />
-          {/* </UserContext.Provider> */}
-          <Outlet />
-        </div>
-      </UserContext.Provider>
+      <Provider store={appStore}>
+        {/* by default , it will show "Default User" */}
+        <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
+          {/* Aditya Ranjan */}
+          <div className="container-fluid">
+            {/* <UserContext.Provider value={{ loggedInUser: "Elon Musk" }}> */}
+            {/* Elon Musk */}
+            <Header />
+            {/* </UserContext.Provider> */}
+            <Outlet />
+          </div>
+        </UserContext.Provider>
+      </Provider>
     </>
   );
 };

@@ -112,6 +112,121 @@ global state that can be easily shared across different components .
 + If you click on this add button, it dispatches an action, which calls a reducer function which updates the slice of the store and because this header component is subscribed to the store using a selector, it will automatically got updated. 
 ---
 
+## Redux start procedure
+
+- Install two libraries : 
+    - @reduxjs/toolkit & react-redux
+- Build our store
+- Connect our store to our app
+- Create a Slice (cartSlice)
+- dispatch(Action)
+- selector
+
+1.  *Install two libraries* `react-redux` & `@reduxjs/toolkit`.
+```
+npm i axios react-redux @reduxjs/toolkit
+``` 
+2. *Configure a store:* Using `configureStore()` function and it comes from redux toolkit.
+    - We will add `slices` inside this store.
+```
+import {configureStore} from "@reduxjs/toolkit"
+
+export const appStore = configureStore({});
+```
+3. *Connect this store to our application*
+
+    - go to the `App.js`
+    - we need to provide our store to our application so we will need a `<Provider></Provider>` from `react-redux`.
+
+    > Note : The configuring store is a redux job and providing it to react application is react-redux job. `React-redux is working like a bridge.` We are providing inside a react application that is why this `Provider` is coming from `react-redux`.
+
+    - we will wrap our whole app under the `Provider` and pass the `store` as props over here.
+    - we will pass our store name as `appStore`.
+
+    ```javascript
+
+    // In the App.js
+      
+    return (
+    <>
+      <Provider store={appStore}>
+          <Header />
+          <Outlet />
+      </Provider>
+    </>
+    );
+    ```
+4. *Create a Slice (cartSlice)*
+    - Create a slice using a function known as `createSlice()` 
+    - `createSlice()` comes from `@reduxjs/toolkit`
+    - this function takes an configuration such as :
+        - name : It is a string.
+        - initialState : it is an Object, which takes initial state of our slice.
+        - reducers : it is also an object. This object has different type of actions. 
+            -  What different type of actions could be : 
+                - addItem, removeItem etc.
+        We can perform all these actions and for each corresponding this, we will have this reducer functions. We will create actions and reducers over here.
+        ```javascript
+        // This is basically a reducer function with the name  `addItem` but this will map to an action
+            addItem: (state, action) => {
+            state.items.push(action.payload)
+            },
+        ```
+    - **What is an `action`?**
+        - Actions are basically, we can say that it's kind of like small API's, to communicate with redux store. so if you want to add a item, I will dispatch the `addItem`.  
+
+        ```javascript
+        import { createSlice } from "@reduxjs/toolkit";
+
+        const initialState = {
+        items: [],
+        };
+
+        const cartSlice = createSlice({
+        name: second,
+        initialState,
+        reducers: {
+            // this addItem, removeItem, clearCart etc key are an action and the value is a reducer function which is mapped to this
+            addItem: (state, action) => {
+                // Mutating the state here
+            state.items.push(action.payload)
+            },
+            removeItem: (state) => {
+            state.items.pop()
+            },
+            clearCart: (state) => {
+            state.items.length = 0;
+            }
+
+        },
+        });
+
+        export const {addItem, removeItem, clearCart} = cartSlice.actions;
+
+        export default cartSlice.reducer;
+        ```
+        - This reducer function actually modifies the data inside this slice. this reducer function get 2 parameters a `state` and `action`. Now, It will modify our state based on the action.
+        - > *Note : If we don't need action then we can avoid it.*  
+    - We export two things `actions` and `reducer`. 
+    - Finally, add cart reducer to the appStore.
+    
+    ```javascript
+    import { configureStore } from "@reduxjs/toolkit";
+    import cartReducer from "../slices/cartSlice";
+
+    export const appStore = configureStore({
+    // This reducer is basically responsible for modify the app store. This reducer is the combination of all small reducer from different slices.
+    //  Each slices have it's own reducers.
+    reducer: {
+        cart: cartReducer,
+        // user : userReducer,
+    },
+    });
+
+    ```
+
+---
+
 1. **Advantages of using  Redux Toolkit over Redux ?**
 
     `Redux Toolkit` is a set of utility functions and abstractions that simplifies and streamlines the process of working with Redux. It is designed to address some of the common pain points and boilerplate associated with using plain Redux. 
