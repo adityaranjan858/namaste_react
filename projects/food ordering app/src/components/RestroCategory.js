@@ -20,7 +20,7 @@ const RestroCategory = ({ data, showItems, setShowIndexes }) => {
         <div className="d-flex justify-content-between">
           <div className="fw-bold fs-4">{title}</div>
           <div>
-            <i class="fa-solid fa-circle-chevron-down"></i>
+            <i className="fa-solid fa-circle-chevron-down"></i>
           </div>
         </div>
         {showItems &&

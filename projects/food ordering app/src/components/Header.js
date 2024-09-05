@@ -8,9 +8,14 @@ import icon from "../../media/user_icon.png";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import { UserContext } from "../utils/UserContext";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [loginBtn, setLoginBtn] = useState("Login");
+
+  // Subscribing to the store using selector
+  const cartItems = useSelector((store) => store.cart.items);
+  console.log(cartItems);
 
   const status = useOnlineStatus();
 
@@ -63,7 +68,7 @@ const Header = () => {
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/cart">
-                  Cart
+                  Cart-({cartItems.length} items)
                 </Link>
               </li>
               <li className="nav-item">

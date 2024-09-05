@@ -1,9 +1,18 @@
 import React from "react";
 import { RES_MENU_IMG_CDN } from "../utils/constants";
+import { useDispatch } from "react-redux";
+import { addItem } from "../redux/slices/cartSlice";
 
 const RestroCategoryItemList = ({ data }) => {
   console.log(data);
   const { name, price, description, defaultPrice, imageId, ratings } = data;
+
+  const dispatch = useDispatch();
+
+  const handleAddItem = (item) => {
+    dispatch(addItem(item));
+  };
+
   return (
     <>
       <div>
@@ -20,12 +29,19 @@ const RestroCategoryItemList = ({ data }) => {
             </p>
           </div>
 
-          <div className="d-flex justify-content-end">
-            <img
-              src={RES_MENU_IMG_CDN + imageId}
-              alt=""
-              className="object-fit-cover w-50 h-50"
-            />
+          <div className="">
+            <div className="d-flex justify-content-end">
+              <img
+                src={RES_MENU_IMG_CDN + imageId}
+                alt=""
+                className="object-fit-cover w-50 h-50"
+              />
+            </div>
+            <div className="d-flex justify-content-end">
+              <button type="submit" onClick={() => handleAddItem(data)}>
+                Add+
+              </button>
+            </div>
           </div>
         </div>
         <hr />

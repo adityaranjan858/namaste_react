@@ -9,6 +9,14 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addItem: (state, action) => {
+      // Vanilla(Older) Redux => DON'T MUTATE STATE
+      // const newState = [...state]
+      // newState.items.push(action.payload);
+      // return newState;
+
+      // Redux Toolkit
+      // We HAVE to mutate the state
+      // mutating the state here
       state.items.push(action.payload);
     },
     removeItem: (state) => {

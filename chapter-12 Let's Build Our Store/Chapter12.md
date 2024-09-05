@@ -224,6 +224,96 @@ export const appStore = configureStore({});
     });
 
     ```
+5. **Dispatch(Action)** :
+    
+    - When somebody clicks on this `add` button , it should `dispatch` an `action` 
+    ```javascript
+    <button type="submit" onClick={handleAddItem}>
+        Add+
+    </button>
+    ```
+
+    - This `dispatch` is a function that we get from a hook, that is known as `useDispatch()`.
+    - This `useDispatch()` hook is comes from `react-redux`.
+
+    ```javascript
+    const dispatch = useDispatch();
+    ```
+    - whenever we will click on this add button, an action is dispatched which calls a reducer function which updates the slice of the store. And because my header is subscribed to the store using a selector, everything is working seamlessly fine.
+    - so, in this case, whenever we clicks this add button, it will add pizza to the cart slice.
+
+    ```javascript
+    const handleAddItem = () => {
+        // dispatch an action
+        dispatch(addItem("pizza"));
+    };
+    ```
+
+    > Important Note : The three variations you provided for the `onClick` event handler in React serve different purposes. Here's a breakdown of each one:
+
+        1. **`onClick={handleAddItem}`**
+
+        This directly assigns the `handleAddItem` function to the `onClick` event. When the element is clicked, `handleAddItem` will be called without any arguments. This is useful when you want to invoke the function with no parameters.
+
+        ```jsx
+        <button onClick={handleAddItem}>Add Item</button>
+        ```
+
+        2. **`onClick={() => handleAddItem(id)}`**
+
+        This uses an arrow function to invoke `handleAddItem` with the parameter `id`. When the button is clicked, the arrow function runs first, and then `handleAddItem` is called with the specified `id`. This is helpful when you want to pass specific parameters to the function.
+
+        ```jsx
+        <button onClick={() => handleAddItem(id)}>Add Item</button>
+        ```
+
+        3. **`onClick={handleAddItem(id)}`**
+
+        This immediately invokes `handleAddItem` with the argument `id` when the component is rendered, rather than attaching it as an event handler. As a result, `handleAddItem` will run right away when the component mounts, and you'll likely see unexpected behavior. This is **not the correct way** to set an event handler.
+
+        ```jsx
+        <button onClick={handleAddItem(id)}>Add Item</button> // Not recommended
+        ```
+
+        ### Summary:
+
+        - **Use `onClick={handleAddItem}`** when you want to call the function without any arguments.
+        - **Use `onClick={() => handleAddItem(id)}`** when you want to pass an argument to the function when the button is clicked.
+        - **Avoid using `onClick={handleAddItem(id)}`** because it calls the function immediately upon rendering, not upon the click event. 
+
+
+6. **Selector** : 
+    - A selector is nothing but the hook inside a react.
+    - This `useSelector()` is a hook that gives us a access to our store.
+    - This selector basically helps us to identify what portion of our store I need to read. and We need to subscribe too. 
+
+    ```javascript
+    // Subscribing to the store using selector
+    const cartItems = useSelector((store) => store.cart.items);
+    ```
+    Access it as :
+
+    ```javascript
+    <Link className="nav-link" to="/cart">
+        Cart-({cartItems.length} items)
+    </Link>
+    ```
+
+    > Very Important Note :
+     - Why it's name is `selector` ? 
+        - Because you are selecting a portion of the store, that's why it is a selector. So always select a portion of the store rather than selecting a whole store.
+        or 
+        So you are subscribing to the selected portion of the store.
+
+        ```javascript
+        // Correct way : When you will write like this, cart items will only update when my `store.cart.items` change that small items, it has nothing to do with anything happening outside the scope of this. 
+        //`It is only subscribed to cart items.`   
+          const cartItems = useSelector((store) => store.cart.items);
+        
+        // Wrong way
+          const store = useSelector((store) => store);
+          const cartItems = store.cart.items
+        ``` 
 
 ---
 
@@ -575,3 +665,96 @@ export const appStore = configureStore({});
 
     These are the main configuration options for createSlice in Redux Toolkit. It provides a convenient way to define actions, reducers, and initial states for slices of our Redux store, reducing the amount of boilerplate code and promoting best practices.
 
+
+
+# Interview purpose
+1. **Confusing between `reducer` keyword from store to slice, Clear it out**
+
+    **In the `store`**
+
+    Reducer is the combination of all small reducer. So, in the store we only use `reducer` as singular noun.
+
+    ```javascript
+    reducer: {
+        cart: cartReducer,
+    },
+    ```
+    **In the `Slice`**
+
+    In the slice, there are multiple `reducer functions` so we use plural noun as `reducers` but `export` in singular noun as `reducer`.  
+
+    ```javascript
+    // reducer functions
+    reducers: {
+        addItem: (state, action) => {
+        // mutating the state here
+        state.items.push(action.payload);
+        },
+        removeItem: (state) => {
+        state.items.pop();
+        },
+        clearCart: (state) => {
+        state.items.length = 0;
+        },
+    },
+    ```
+
+    ```javascript
+    // exporting reducer
+    export default cartSlice.reducer;
+ 
+   ```
+2. **Redux**
+
+    - In the older version of Redux, Redux used to say, never mutate the state and returning was mandatory.Basically, we used to return the new state. 
+    - But in the latest Redux Toolkit, We have to mutate the state and we don't have to return anything.  
+    > Behind the scenes, Redux is actually doing something like this.
+    Redux uses something known as `Immer` Library to do this.
+    So, Basically Immer library is kind of like finding the difference between the original state, the mutated state and then gives us back the new State, Which is an immutable state, a new copy of the state. 
+
+    ```javascript
+    reducers: {
+    addItem: (state, action) => {
+      // Vanilla(Older) Redux => DON'T MUTATE STATE
+      // const newState = [...state]
+      // newState.items.push(action.payload);
+      // return newState;
+
+      // Redux Toolkit
+      // We HAVE to mutate the state
+      // mutating the state here
+      state.items.push(action.payload);
+    },
+    removeItem: (state) => {
+      state.items.pop();
+    },
+    ```
+
+3. **Do not directly modify the state**
+    Example :
+    ```javascript
+    clearCart: (state) => {
+        // Correct way 
+        state.items.length = 0;
+        // or
+        // whatever you return from your reducer function, it will replace whatever is there in original state.
+        // If you return over here, you will have to return full state from here. 
+        return {items : []}; // this new object will be replaced inside original state.
+
+        // Wrong way 
+        // state = ["Aditya"]
+    },
+    ```
+    - If you will make the state empty by using `wrong way`, It won't work because you are not modifying / mutating the state, you are just changing the reference to it. 
+    - So in this case, If you have to make it empty, you have to actually mutate the state and we can mutate the state by using `correct way` 
+    - RTK says either mutate the existing state or return the new state.
+
+4. **What is the way to check the state in the `console.log()`?**
+    - If you have to check the state in the `console.log()` then use `current()` function from `@reduxToolkit`. 
+    ```javascript
+    clearCart: (state) => {
+         // console.log(state)  it won't work , try below one.
+        console.log(current(state))
+        state.items.length = 0;
+    },
+    ```
