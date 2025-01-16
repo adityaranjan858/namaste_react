@@ -14,3 +14,10 @@ VSCODE extensions :
     8. JSX HTML </tags>
     9. Javascript (ES6) code snippets
     10. 
+
+Setting up testing in our app :
+    1. Install React Testing Library
+    2. Install jest 
+    3. Install Babel Dependency 
+    4. configure babel 
+    5. configure parcel config file to disable Babel transpilation in Parcel, override the default Parcel config for JavaScript to exclude @parcel/transformer-babel. 
