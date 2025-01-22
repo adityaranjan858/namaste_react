@@ -153,6 +153,23 @@ I hope now you have the overview that how testing works. So now let’s write th
 
 ## Unit test: 
 
+**Render :**
+Whenever you are testing a UI component inside React, you will have to **render** that component onto the JS DOM first of all.
+```
+Example :
+render(<Contactus />) 
+```
+
+**Screen :** 
+Screen is an object which comes from "React testing Library". 
+Whatever we will *render* , will get access through *screen*.
+
+```
+<!-- heading is h1 in contactus component. -->
+const header = screen.getByRole("heading")
+```
+
+---
 Let’s write a test case to check the component is loading or 
 not. To check any component loads or not, we need to check in 
 the jsdom. 
@@ -170,12 +187,13 @@ enable it
 
 To enable JSX in testing environment:
 + a. install babel: npm i -D @babel/preset-react
+    > @babel/preset-react is helping our testing library to convert JSX code to HTML. So it can read properly.
 + b.  set babel config:
 
 ![alt text](image-2.png)
 
 > 📢Note: Install one more library to use the dom functions
->  + npm i -D @testing-library/jest-dom.
+>  + npm i -D @testing-library/jest-dom
 
 Now, run the testcase. It will pass
 
@@ -185,9 +203,37 @@ using different functions like
 const button = screen.getByText("submit") // It will find the te
 expect(button).toBeInTheDocument()
 ```
-> 💡We can use **it** instead of **test** keyword
+
+> Whenever we have to check something whether it has loaded or not in the DOM then we use funtion **toBeInTheDocument()**
+
+**Note :** 
+1. for testing single thing/item , we can use **getBy...**.
+2. for testing multiple item of same thing such as "*input*" , we can use **getAll...**.
+3. we use *getByRole* for *input* as **textbox**.
+4. *getBy..*, *getAllBy..* are all these called a querying.
+
+```
+if error is something like this :
++ Received has type:  array,
++ Received has value: [`<input class="border rounded-5 border-black my-2 p-2" id="" name="name" placeholder="name" type="text" />, <input class="border rounded-5 border-black my-2 p-2" id="" name="message" placeholder="message" type="textarea" />`]*
+
+then test using **length** property:
+
+test("should load multiple headings inside the contact us component", () => {
+  render(<ContactUs />);
+
+  // Querying
+  let heading = screen.getAllByRole("heading");
+
+  // Assertion
+  expect(heading.length).toBe(3); 
+});
+```
+> 💡We can use **it** instead of **test** keyword, both are same things.
 
 To write multiple testcases
+
+**describe()** : - Group these multiple test cases into a single block that block is known as `describe()`. We can also nesting this describe() into describe().  
 
 ```
 describe('To test the header component',() => {

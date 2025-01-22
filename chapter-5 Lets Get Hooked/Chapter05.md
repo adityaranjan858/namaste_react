@@ -305,7 +305,7 @@ UI(display screen) ?
         + **Why can't we just modify it directly?**
             + Because there needs to be a trigger to start the `Diff` algorithm and update the UI.
             + That's why they created the second function. 
-            + whenever we call the second function, it will automatically be render your component.  
+            + whenever we call the second function, it will automatically re-render your component.  
     
 4. **How can we display filtered restaurants dynamically on UI(display screen)? I am repeating the same question which we had previously.**
 

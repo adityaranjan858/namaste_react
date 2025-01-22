@@ -21,3 +21,8 @@ Setting up testing in our app :
     3. Install Babel Dependency 
     4. configure babel 
     5. configure parcel config file to disable Babel transpilation in Parcel, override the default Parcel config for JavaScript to exclude @parcel/transformer-babel. 
+    6. Jest - npx jest --init
+    7. Install jsdom Library
+    8. install @babel/preset-react - to make JSX work in test cases
+    9. include @babel/preset-react inside my babel configuration.
+    10. install @testing-library/jest-dom
