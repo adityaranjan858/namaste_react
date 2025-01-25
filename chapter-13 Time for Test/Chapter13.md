@@ -268,10 +268,490 @@ router-dom. But we have provided router to the App
 component. So, To test the Header we have to provide the 
 router to the Header component
 
+>If you encounter an error related to the router, such as "error occurred in `<Link>`", it indicates that the error originates from the router. In this case, you'll need to wrap your component with `<BrowserRouter></BrowserRouter>`.
+
+>Similarly, if you receive an error from the react-redux library, such as when using useSelector(), it means you need to provide a Redux store. You can do this by wrapping your component in `<Provider store={yourStore}></Provider>`.
+
+> In regex, We don't need to write exact string.
+Example : 
+```
+const cartText = screen.getByText(/cart/i);
+expect(cartText).toBeInTheDocument();
+```
+
+> Below image describe : 
+ + how to use store for testing if we are using react-redux in the project.
+ + Also react router if we use.
+
 ![alt text](image-3.png)
 
 To check the button click, you can use the fireEvent which 
 behaves like an onclick method 
+
+1. If there were multiple buttons on the screen, but I want specifically the button which has name as "login" (you can pass any name in place of login) then only get me. So how we can achieve this ?
+
+    + we can achieve this by pass extra object with querying. 
+    
+    Example : 
+    ```
+    const loginButton = screen.getByRole("button", {name : "login"})
+
+    expect(loginButton).toBeInTheDocument()
+    ```
+**fireEvent**
+---
+
++ when we need to test such as an event then we use *fireEvent*
+
+Example : 
+
+```
+const loginButton = screen.getByRole("button", {name : "login"})
+
+fireEvent.click(loginButton)
+
+const logButton = screen.getByRole("button", {name : "logout"})
+
+expect(logButton).toBeInTheDocument()
+```
+
+## Mock Data/ Image/ Css style
+
+1. **Data :**
+
+    For mocking data , we need to use same "props" name inside test file, which we are using in component.
+
+    Example : *resData* is the props name which we were using in the component.
+
+    ```
+    render(<RestaurantCard resData={Mock_Data} />)
+    ```
+    Now, procedure for creating a mock data for testing
+
+    *Steps :* 
+    
+    + create a folder name with** __mocks__** (add underscore 2 times before and after of *mocks*)
+    + create a file inside the *mocks* folder with anyName such as **"resCardMock.json"**
+    + copy and paste data such as :
+        ```
+        {
+            id : 1039,
+            res_name : "Lemon Chilli",
+            ...etc
+        }
+        ```
+    + import the mock data such as :
+        ```
+        // there is no specific name for importing so use this and should be all in Capital letters.
+
+        import MOCK_DATA from "../mocks/resCardMock.json"
+        ```
+    + Now run the test 
+
+        Full Example :  
+        ```
+        it("should render RestaurantCard component with props data", ()=>{
+
+        render(<RestaurantCard resData={Mock_Data} />)
+
+        const name = screen.getByText("Lemon Chilli")
+
+        expect(name).toBeInTheDocument();
+
+        })
+        ```
+
+
+2. **Image & Css Style:**
+
+    ### 1. Directory Structure
+
+    Here’s a recommended directory structure for your project, specifically focusing on where to place your mocks:
+
+    ```
+    /your-project-root
+    |-- /src
+    |   |-- /__mocks__             // Mocks directory inside src
+    |   |   |-- fileMock.js        // Mock file for images
+    |   |   |-- styleMock.js       // Mock file for CSS
+    |   |-- /media
+    |   |   |-- logo.png           // Your logo image or other media files
+    |   |-- YourComponent.js
+    |-- package.json
+    |-- jest.config.js             // Jest configuration file (if applicable)
+    ```
+
+    ### 2. Mock File for Images (`fileMock.js`)
+
+    Create a mock file for images to ensure that Jest can handle imports like PNG, JPG, etc. Here is how `fileMock.js` should look:
+
+    ```javascript
+    // src/__mocks__/fileMock.js
+
+    module.exports = 'test-file-stub'; // A placeholder string for image imports
+    ```
+
+    ### 3. Mock File for CSS Styles (`styleMock.js`)
+
+    Create a mock for your CSS files. This allows you to test your components without loading the actual styles:
+
+    ```javascript
+    // src/__mocks__/styleMock.js
+
+    module.exports = {}; // An empty object for style imports
+    ```
+
+    ### 4. Jest Configuration
+
+    Now, you need to configure Jest to use these mock files when it encounters CSS or image imports. Here’s how to do that in your `jest.config.js` file:
+
+    ```javascript
+    // jest.config.js
+
+    module.exports = {
+        moduleNameMapper: {
+            '\\.(css|less|scss|sass)$': '<rootDir>/src/__mocks__/styleMock.js',  // Map CSS styles
+            '\\.(gif|ttf|eot|svg|jpg|jpeg|png)$': '<rootDir>/src/__mocks__/fileMock.js', // Map image files
+        },
+        // You can add other configurations here as needed
+        testEnvironment: 'jsdom', // Recommended for React components
+    };
+    ```
+
+    #### If you are using `package.json` for Jest configuration:
+
+    ```json
+    {
+    "jest": {
+        "moduleNameMapper": {
+        "\\.(css|less|scss|sass)$": "<rootDir>/src/__mocks__/styleMock.js",  // Map CSS styles
+        "\\.(gif|ttf|eot|svg|jpg|jpeg|png)$": "<rootDir>/src/__mocks__/fileMock.js" // Map image files
+        },
+        "testEnvironment": "jsdom" // Recommended for React components
+    }
+    }
+    ```
+
+    ### 5. Example Component Usage
+
+    Here’s how you might use an image and a CSS import in your React component:
+
+    ```javascript
+    // src/YourComponent.js
+
+    import React from 'react';
+    import './YourComponent.css'; // Importing a CSS file
+    import logo from '../media/logo.png'; // Importing an image
+
+    const YourComponent = () => {
+        return (
+            <div className="your-component-class">
+                <h1>Welcome to Your Component</h1>
+                <img src={logo} alt="Logo" />
+            </div>
+        );
+    };
+
+    export default YourComponent;
+    ```
+
+    ### 6. Running Your Tests
+
+    With the mocks and Jest configuration set up, you can now run your Jest tests without encountering errors related to CSS or image imports.
+---
+
+### **Mocking :**
+
+Mocking in testing, especially with tools like Jest, is a crucial skill for ensuring your tests run consistently and accurately without relying on real external data or services. Mocking allows you to isolate components and simulate various conditions your code may encounter. Below is a comprehensive guide to mocking various elements in your application, including data, functions, modules, and more.
+
+### What Is Mocking?
+
+**Mocking** refers to creating a **substitute or a fake** implementation of a piece of code (such as a function, class, or module) that simulates behavior of the original code without executing the real implementation. This allows you to focus on testing your unit of code rather than dealing with side effects or complexities of external systems.
+
+### Common Uses of Mocking
+
+1. **External Services**: Mock API calls to external services to return controlled responses.
+2. **Modules**: Mock module imports to prevent executing their code during tests.
+3. **Utilities**: Mock utility functions to control their outputs.
+4. **Components**: Mock child components to isolate the behavior of parent components.
+5. **Data**: Mock any data that may change over time or is difficult to set up.
+
+### Mocking APIs and Data
+
+When working with API calls, you'll use mocking to simulate network requests. Here’s how to do that effectively:
+
+#### Step 1: Use a Mocking Library
+
+You can use libraries like **`jest.mock`** to create mocks. If you are fetching data from an API, you will typically use mocks in your tests to return controlled responses.
+
+#### Example of Mocking API Calls
+
+Imagine you have a component that fetches data from an API:
+
+```javascript
+// SampleComponent.js
+import React, { useEffect, useState } from 'react';
+
+const SampleComponent = () => {
+    const [data, setData] = useState(null);
+    
+    useEffect(() => {
+        fetch('https://api.example.com/data')
+            .then(response => response.json())
+            .then(data => setData(data));
+    }, []);
+    
+    if (!data) return <div>Loading...</div>;
+    
+    return <div>{data.title}</div>;
+};
+
+export default SampleComponent;
+```
+
+You would want to mock the API call when testing this component:
+
+```javascript
+// SampleComponent.test.js
+import React from 'react';
+import { render, waitFor } from '@testing-library/react';
+import SampleComponent from './SampleComponent';
+
+// Mock the fetch API
+global.fetch = jest.fn(() =>
+    Promise.resolve({
+        json: () => Promise.resolve({ title: 'Mocked Data Title' }), // Mocked response
+    })
+);
+
+test('renders with fetched data', async () => {
+    const { getByText } = render(<SampleComponent />);
+    
+    await waitFor(() => expect(getByText(/mocked data title/i)).toBeInTheDocument());
+});
+```
+
+### Mocking Utility Functions
+
+If you’re importing utility functions that your components rely on, you can mock them similarly:
+
+#### Example Utility Function
+
+```javascript
+// utils.js
+export const calculateSum = (a, b) => a + b;
+```
+
+You can mock this function in your tests as follows:
+
+```javascript
+// Component that uses the utility function
+// SumComponent.js
+import React from 'react';
+import { calculateSum } from './utils';
+
+const SumComponent = ({ a, b }) => {
+    const sum = calculateSum(a, b);
+    return <div>Sum: {sum}</div>;
+};
+
+export default SumComponent;
+```
+
+#### Mocking the Utility Function
+
+```javascript
+// SumComponent.test.js
+import React from 'react';
+import { render } from '@testing-library/react';
+import SumComponent from './SumComponent';
+import * as utils from './utils';
+
+// Mock the calculateSum function
+jest.mock('./utils', () => ({
+    calculateSum: jest.fn(),
+}));
+
+test('renders with mocked sum', () => {
+    utils.calculateSum.mockReturnValue(10); // Mock return value
+    const { getByText } = render(<SumComponent a={3} b={7} />);
+    
+    expect(getByText(/Sum: 10/i)).toBeInTheDocument();
+});
+```
+
+### Mocking Child Components
+
+You may want to mock child components to isolate your tests, especially if the child component has its own dependencies:
+
+#### Example Parent Component
+
+```javascript
+// ParentComponent.js
+import React from 'react';
+import ChildComponent from './ChildComponent';
+
+const ParentComponent = () => {
+    return (
+        <div>
+            <h1>Parent Component</h1>
+            <ChildComponent />
+        </div>
+    );
+};
+
+export default ParentComponent;
+```
+
+#### Mocking the Child Component
+
+```javascript
+// ParentComponent.test.js
+import React from 'react';
+import { render } from '@testing-library/react';
+import ParentComponent from './ParentComponent';
+
+// Mock the ChildComponent
+jest.mock('./ChildComponent', () => () => <div>Mocked Child</div>);
+
+test('renders ParentComponent with mocked ChildComponent', () => {
+    const { getByText } = render(<ParentComponent />);
+    
+    expect(getByText(/Parent Component/i)).toBeInTheDocument();
+    expect(getByText(/Mocked Child/i)).toBeInTheDocument();
+});
+```
+
+### Mocking Module Imports
+
+Sometimes you might want to mock a module that has side effects or complex behavior. Use `jest.mock` for that purpose.
+
+#### Example with a Module
+
+```javascript
+// dataService.js (a module that fetches data)
+export const fetchData = async () => {
+    const response = await fetch('https://api.example.com/data');
+    return await response.json();
+};
+```
+
+### Mocking the Module in a Test
+
+```javascript
+// dataService.test.js
+import { fetchData } from './dataService';
+
+jest.mock('./dataService', () => ({
+    fetchData: jest.fn(),
+}));
+
+test('it mocks fetchData correctly', async () => {
+    const mockData = { title: 'Mocked Title' };
+    fetchData.mockResolvedValue(mockData); // Mock implementation
+
+    const data = await fetchData();
+    expect(data).toEqual(mockData);
+    expect(fetchData).toHaveBeenCalled(); // Ensure it was called
+});
+```
+
+### Best Practices for Mocking
+
+1. **Isolate Tests**: Always test your components in isolation by mocking dependencies to avoid unexpected behaviors.
+2. **Use Meaningful Mocks**: Your mocks should represent real-world scenarios for better test reliability.
+3. **Clean Up**: If you change global parameters (like global.fetch), reset them after tests to avoid leaking between tests.
+4. **Use `jest.clearAllMocks()`**: This can be useful if you want to reset mock calls and instances in your tests.
+
+### Conclusion
+
+Mocking is an essential part of making sure your tests run efficiently and consistently. By using Jest's mocking capabilities effectively, you can control the environment of your tests without relying on actual external data or services. This leads to a robust testing phase where you can identify issues in your codebase regardless of the state of external dependencies.
+
+If you encounter specific situations that require tailored mocking strategies, or if there are other aspects of mocking you want to explore further, feel free to ask! 
+
+
+## Testing for HOC 
+You want to write a test case for the higher-order component (HOC) `withRestroOpenStatus`, which takes a component (in this case, `RestroCard`) and renders it along with a label indicating that the restaurant is open. 
+
+Let's write a simple test case using Jest and React Testing Library to ensure that the HOC behaves as expected.
+
+### Test Setup
+
+1. **Create the Base Component**: You'll need a base component that `withRestroOpenStatus` will wrap.
+2. **Test the HOC**: The test will ensure that the label "Restaurant is Open!!" is rendered along with the `RestroCard` component.
+
+### Step 1: Base Component Implementation
+
+Here’s a simple example of what the `RestroCard` component might look like:
+
+```javascript
+// RestroCard.js
+import React from 'react';
+
+const RestroCard = ({ name }) => {
+    return <div>{name}</div>;
+};
+
+export default RestroCard;
+```
+
+### Step 2: Implement the Higher-Order Component
+
+You already have the HOC, but here it is for clarity:
+
+```javascript
+// withRestroOpenStatus.js
+import React from 'react';
+
+export const withRestroOpenStatus = (RestroCard) => {
+    return (props) => {
+        return (
+            <>
+                <label>Restaurant is Open!!</label>
+                <RestroCard {...props} />
+            </>
+        );
+    };
+};
+```
+
+### Step 3: Write the Test Case
+
+Now, let's write the test case. You will need to set up your test file accordingly.
+
+```javascript
+// withRestroOpenStatus.test.js
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import { withRestroOpenStatus } from './withRestroOpenStatus';
+import RestroCard from './RestroCard'; // Import the base component
+
+// Create a wrapped component using the HOC
+const WrappedRestroCard = withRestroOpenStatus(RestroCard);
+
+describe('withRestroOpenStatus HOC', () => {
+    test('renders the open status label and the RestroCard component', () => {
+        // Arrange: Render the wrapped component
+        render(<WrappedRestroCard name="Pizza Place" />);
+
+        // Act & Assert: Check that the label is displayed
+        expect(screen.getByLabelText(/restaurant is open/i)).toBeInTheDocument();
+        
+        // Assert: Check that the RestroCard's content is displayed
+        expect(screen.getByText(/pizza place/i)).toBeInTheDocument();
+    });
+});
+```
+
+### Key Points to Note in the Test:
+
+1. **Rendering the Wrapped Component**: We render `WrappedRestroCard`, which incorporates the HOC.
+2. **Label Assertion**: We check whether the label "Restaurant is Open!!" is in the document.
+3. **RestroCard Content Assertion**: We validate that the content from `RestroCard` (in this case, the text "Pizza Place") is present in the document.
+
+### Conclusion
+
+With this test case, you're ensuring that the HOC functionality works correctly, displaying the correct label and rendering the wrapped `RestroCard` component with props adequately. Make sure to run your tests using Jest or your testing framework of choice to verify that everything behaves as intended. 
 
 ## Integration Testing:
 

@@ -52,7 +52,7 @@ export const withRestroOPenStatus = (RestroCard) => {
   return (props) => {
     return (
       <>
-        <label>Restaurant is Open!!</label>
+        <label htmlFor="open">Restaurant is Open!!</label>
         <RestroCard {...props} />
       </>
     );

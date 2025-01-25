@@ -64,7 +64,7 @@ Higher order components (HOC) are functions that take a component and return a n
     };
     };
     ```
-    We used spread operator, so it will pass al the props that i receive.
+    We used spread operator, so it will pass all the props that i receive.
     ```javascript
     {...props}
     ```

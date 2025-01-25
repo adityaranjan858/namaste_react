@@ -193,6 +193,12 @@ const config = {
 
   // Whether to use watchman for file crawling
   // watchman: true,
+
+  moduleNameMapper: {
+    "\\.(css|less|scss|sass)$": "identity-obj-proxy",
+    "\\.(gif|ttf|eot|svg|jpg|png)$":
+      "<rootDir>/src/components/__mocks__/fileMock.js",
+  },
 };
 
 module.exports = config;
