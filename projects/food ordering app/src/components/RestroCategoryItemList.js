@@ -15,7 +15,7 @@ const RestroCategoryItemList = ({ data }) => {
 
   return (
     <>
-      <div>
+      <div data-testid="foodItems">
         <div className="d-flex justify-content-between align-items-center">
           <div className="w-100">
             <p>{name}</p>

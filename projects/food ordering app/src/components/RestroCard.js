@@ -24,7 +24,7 @@ const RestroCard = (props) => {
   const { loggedInUser } = useContext(UserContext);
   return (
     <>
-      <div className="card my-3 h-100 lh-base">
+      <div data-testid="resData" className="card my-3 h-100 lh-base">
         <img
           src={RES_IMG_CDN + cloudinaryImageId}
           className="card-img-top"

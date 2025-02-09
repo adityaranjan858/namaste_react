@@ -148,6 +148,7 @@ const Body = () => {
               <input
                 className="form-control me-2"
                 type="search"
+                data-testid="searchInput"
                 placeholder="Search By Name"
                 aria-label="Search"
                 name="search"

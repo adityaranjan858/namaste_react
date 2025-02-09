@@ -759,6 +759,8 @@ With this test case, you're ensuring that the HOC functionality works correctly,
 package.json like “watch-test”:”jest --watch” . Now we 
 can simple run npm run watch-test.
 
+When multiple components work together this is known as Integration Testing.
+
 Let’s write the test case for the Search component. It should 
 show the card in the body when we search some restaurant
 
@@ -771,31 +773,51 @@ render(<Body/>)     // will throw an error
  
 > 📢Note: Error generated because the Body component uses the 
 fetch function which is provided by the browser. But we 
-are using jsdom. So we need to make a mock fetch function 
+are using jsdom. So we need to make a mock **fetch function** 
 with mock data that will replace the original fetch 
 function.
 
 For creating fetch function, we need to **create mock data** for restaurant list. So, create a new file **Mock_Data** and store the data by coping the restaurant list from the api.
 
-**Create our fetch function** similar to browser fetch function 
+Note : 
+---
+### Test should run automatically
+Set a test case should run automatically every time, we do not need to run itself. so set below code in scripts 
+```
+"watch-test": "jest --watch"
+```
+and run the command to start it 
+```
+npm run watch-test
+```
+---
+
+**Create our fetch function** similar to browser fetch function
+
+> We don't make an actual network call from our test because this test cases does not run on a browser which has capabilities to talk to the world. It can't make an API call, it is running on a **jsdom** which is browser like environment. that's why we use mock fetch fn and mock data.
 ```
 // import mock Data
 global.fetch = jest.fn(() => {
-return Promise.resolve({         //  fetch function retu
+return Promise.resolve({     // fetch function returns promise
 json: () => {                // json the promise
 return Promise.resolve(Mock_Data)   // r
 }
 })
 }
 // Mock_Data will be returned in the end from the fetch function
+// We can get Mock_Data from network tab > response of original site from localhost.
+
 it("should show the search button",() => {
 render(<Body/>)    // will throw an error 
 }
+
 ```
+
 Run this test, we will get the warning
 
 💡When we use the async operation, we should wrap our 
-component inside act function. It will return a promise
+component inside **act function**. It will return a promise
+> act function comes from *react-dom/test-utils*
 
 Also provide the router to the component because we are using 
 the `<Link/>`
@@ -854,7 +876,11 @@ expect(searchCards.length).toBe(2)  // expect the count that sho
 Now, all test case will pass.
 
 > 💡If we want to write something after and before all the 
-testcases or each testcases. jest provide functions
+testcases or each testcases. jest provide functions such as *beforeAll()*, *beforeEach()*, *afterAll()*, *afterEach()*. These methods take a callback functions.
+
++ beforeAll() : used to cleanup, log & test something. this will run before all test cases.
+
++ beforeEach() : used to cleanup tasks. this will run before each test cases.
 
 **Final code for Integration testing**
 
